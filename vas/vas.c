@@ -1,10 +1,3 @@
-/*
- * vas.c
- *
- *  Created on: 8 jul 2015
- *      Author: timmy
- */
-
 #include "vas.h"
 #include "../types.h"
 #include "../error/error.h"

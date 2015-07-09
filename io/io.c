@@ -1,10 +1,3 @@
-/*
- * io.c
- *
- *  Created on: 9 jul 2015
- *      Author: timmy
- */
-
 #include "io.h"
 #include "../types.h"
 #include "../error/error.h"

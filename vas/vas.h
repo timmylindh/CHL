@@ -1,10 +1,3 @@
-/*
- * vas.h
- *
- *  Created on: 8 jul 2015
- *      Author: timmy
- */
-
 #ifndef VAS_H_
 #define VAS_H_
 

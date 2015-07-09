@@ -1,10 +1,3 @@
-/*
- * error.c
- *
- *  Created on: 8 jul 2015
- *      Author: timmy
- */
-
 #include "error.h"
 #include "../types.h"
 #include <string.h>

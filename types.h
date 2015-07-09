@@ -1,10 +1,3 @@
-/*
- * types.h
- *
- *  Created on: 8 jul 2015
- *      Author: timmy
- */
-
 #ifndef TYPES_H_
 #define TYPES_H_
 

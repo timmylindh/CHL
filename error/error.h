@@ -1,10 +1,3 @@
-/*
- * error.h
- *
- *  Created on: 8 jul 2015
- *      Author: timmy
- */
-
 #ifndef ERROR_H_
 #define ERROR_H_
 

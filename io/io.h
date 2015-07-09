@@ -1,10 +1,3 @@
-/*
- * io.h
- *
- *  Created on: 9 jul 2015
- *      Author: timmy
- */
-
 #ifndef IO_H_
 #define IO_H_
 
