@@ -3,8 +3,8 @@
 #include "../error/error.h"
 #include <string.h>
 
-static short vfs_index = 0;
-static short vvs_index = 0;
+static t_INDEX vfs_index = 0;
+static t_INDEX vvs_index = 0;
 
 VASItem vfs[VIEW_FUNCTION_SPACE_LIM];
 VASItem vvs[VIEW_VARIABLE_SPACE_LIM];

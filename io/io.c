@@ -6,7 +6,7 @@
 #include <errno.h>
 
 // Open file for reading, error handling
-// Not visible to users
+// OBS: Not visible to users
 static int fopen_read(char * file, FILE ** fp);
 
 void file_get_all(char * file, char * buff, int buff_size) {

@@ -44,6 +44,14 @@ void eget_error(t_ERROR errno, char * str, int str_size) {
 			snprintf(error, ERROR_LIM, "File '%s' not found", spec);
 			break;
 
+		case ERRNO_GET_OVERFLOW:
+			strncpy(error, "GET memory overflow", ERROR_LIM);
+			break;
+
+		case ERRNO_POST_OVERFLOW:
+			strncpy(error, "POST memory overflow", ERROR_LIM);
+			break;
+
 		default:
 			strncpy(error, "No error", ERROR_LIM);
 			break;

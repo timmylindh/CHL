@@ -7,6 +7,8 @@
 #define ERRNO_VFS_OVERFLOW 1
 #define ERRNO_VVS_OVERFLOW 2
 #define ERRNO_FILE_NOT_FOUND 3
+#define ERRNO_GET_OVERFLOW 4
+#define ERRNO_POST_OVERFLOW 5
 
 // Get current error number
 t_ERROR get_errno();
