@@ -59,36 +59,51 @@ static void init_request() {
 
 static void init_get() {
 	char get_data[GET_DATA_LIM] = {0};
+	char * get;
 	char * token;
 
+	// Needed for strtok_r to suppress error
+	get = get_data;
+
 	strncpy(get_data, get_env("QUERY_STRING"), GET_DATA_LIM);
-	token = strtok(get_data, "&");
+	((token = strtok_r(get, "&", &get)) == NULL) ? (token = get) : 0;
 
 	do {
 		set_query_item(token, METHOD_GET);
-		token = strtok(NULL, "&");
+		token = strtok_r(NULL, "&", &get);
 	}
 	while(token != NULL);
 }
 
+// Initialize post array
 static void init_post() {
 	char post_data[POST_DATA_LIM] = {0};
+	char * post;
 	char * token;
 
+	// Needed for strtok_r to suppress error
+	post = post_data;
+
 	fgets(post_data, POST_DATA_LIM, stdin);
-	token = strtok(post_data, "&");
+	((token = strtok_r(post, "&", &post)) == NULL) ? (token = post) : 0;
 
 	do {
 		set_query_item(token, METHOD_POST);
-		token = strtok(NULL, "&");
+		token = strtok_r(NULL, "&", &post);
 	}
 	while(token != NULL);
 }
 
+// Add element to array of method
 static void set_query_item(char * str, short method) {
-	char * token;
+	char * name;
+	char * value;
 
-	if((token = strtok(str, "=")) == NULL)
+	name = strtok(str, "=");
+	if((value = strtok(NULL, "=")) == NULL)
+		value = "\0";
+
+	if(strlen(str) == 0)
 		return;
 
 	if(get_index > GET_LIM) {
@@ -103,21 +118,20 @@ static void set_query_item(char * str, short method) {
 
 	switch(method) {
 		case METHOD_GET:
-			strncpy(GET[get_index].name, token, QUERY_NAME_LIM);
-			token = strtok(NULL, "=");
+			strncpy(GET[get_index].name, name, QUERY_NAME_LIM);
+			strncpy(GET[get_index++].value, value, QUERY_VALUE_LIM);
 
-			strncpy(GET[get_index++].value, token, QUERY_VALUE_LIM);
 			break;
 
 		case METHOD_POST:
-			strncpy(POST[post_index].name, token, QUERY_NAME_LIM);
-			token = strtok(NULL, "=");
+			strncpy(POST[post_index].name, name, QUERY_NAME_LIM);
+			strncpy(POST[post_index++].value, value, QUERY_VALUE_LIM);
 
-			strncpy(POST[post_index++].value, token, QUERY_VALUE_LIM);
 			break;
 	}
 }
 
+// Get environment variable
 static char * get_env(char * var) {
 	char * val;
 
