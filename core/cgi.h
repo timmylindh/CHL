@@ -31,16 +31,8 @@ typedef struct {
 	char * URI;
 } Request;
 
-typedef struct {
-	char name[QUERY_NAME_LIM];
-	char value[QUERY_VALUE_LIM];
-} QUERY_ITEM;
-
 extern Host _host;
 extern Request _request;
-
-extern QUERY_ITEM POST[POST_LIM];
-extern QUERY_ITEM GET[GET_LIM];
 
 // Initialize CGI and format data passed from server
 void cgi_init();

@@ -1,6 +1,7 @@
 #include "cgi.h"
 #include "../error/error.h"
 #include "../types.h"
+#include "../http/http.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -14,8 +15,13 @@
 Host _host;
 Request _request;
 
-QUERY_ITEM POST[POST_LIM];
-QUERY_ITEM GET[POST_LIM];
+typedef struct {
+	char name[QUERY_NAME_LIM];
+	char value[QUERY_VALUE_LIM];
+} QUERY_ITEM;
+
+static QUERY_ITEM POST[POST_LIM];
+static QUERY_ITEM GET[POST_LIM];
 
 static t_INDEX post_index = 0;
 static t_INDEX get_index = 0;
@@ -115,6 +121,9 @@ static void set_query_item(char * str, short method) {
 		set_errno(ERRNO_POST_OVERFLOW, NULL);
 		return;
 	}
+
+	url_decode(name);
+	url_decode(value);
 
 	switch(method) {
 		case METHOD_GET:
