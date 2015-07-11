@@ -52,6 +52,10 @@ void eget_error(t_ERROR errno, char * str, int str_size) {
 			strncpy(error, "POST memory overflow", ERROR_LIM);
 			break;
 
+		case ERRNO_HEADERS_OVERFLOW:
+			strncpy(error, "HEADERS memory overflow", ERROR_LIM);
+			break;
+
 		default:
 			strncpy(error, "No error", ERROR_LIM);
 			break;

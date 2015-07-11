@@ -1,6 +1,18 @@
 #ifndef HTTP_H_
 #define HTTP_H_
 
+// Output headers
+void headers();
+
+// Initialize standard headers
+void headers_init();
+
+// Set header value
+void set_header(char * header, char * value);
+
+// Get header value
+char * get_header(char * header);
+
 // Decode URL format
 void url_decode(char * str);
 

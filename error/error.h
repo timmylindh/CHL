@@ -9,6 +9,7 @@
 #define ERRNO_FILE_NOT_FOUND 3
 #define ERRNO_GET_OVERFLOW 4
 #define ERRNO_POST_OVERFLOW 5
+#define ERRNO_HEADERS_OVERFLOW 6
 
 // Get current error number
 t_ERROR get_errno();

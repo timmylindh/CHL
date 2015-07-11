@@ -1,9 +1,79 @@
 #include "http.h"
 #include "../core/cgi.h"
+#include "../core/types.h"
+#include "../error/error.h"
 
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdio.h>
+
+#define HEADER_HEADER_LIM 30
+#define HEADER_VALUE_LIM 50
+#define HEADERS_LIM 10
+
+typedef struct {
+	char header[HEADER_HEADER_LIM];
+	char value[HEADER_VALUE_LIM];
+} Header;
+
+static Header HEADERS[HEADERS_LIM];
+static t_INDEX headers_index = 0;
+
+// Output headers
+void headers() {
+	int i;
+
+	for(i = 0; i < headers_index; i++) {
+		if(i == (headers_index - 1)) {
+			printf("%s: %s\n\n", HEADERS[headers_index].header, HEADERS[headers_index].value);
+			break;
+		}
+
+		printf("%s: %s\n", HEADERS[headers_index].header, HEADERS[headers_index].value);
+	}
+
+}
+
+// Initialize standard headers
+void headers_init() {
+	strncpy(HEADERS[headers_index].header, "Content-type", HEADER_HEADER_LIM);
+	strncpy(HEADERS[headers_index++].value, "text/html", HEADER_VALUE_LIM);
+}
+
+// Get header value
+char * get_header(char * header) {
+	int i;
+	for(i = 0; (i < headers_index) && strncmp(header, HEADERS[headers_index].header, HEADER_HEADER_LIM); i++);
+
+	if(i == headers_index)
+		return NULL;
+
+	return HEADERS[headers_index].value;
+
+}
+
+// Set header value
+void set_header(char * header, char * value) {
+	int i;
+
+	if(headers_index > HEADERS_LIM) {
+		set_errno(ERRNO_HEADERS_OVERFLOW, NULL);
+		return;
+	}
+
+	for(i = 0; i < headers_index; i++) {
+		if(! strncmp(header, HEADERS[headers_index].header, HEADER_HEADER_LIM)) {
+			strncpy(HEADERS[headers_index].value, value, HEADER_VALUE_LIM);
+			break;
+		}
+	}
+
+	if(i == headers_index) {
+		strncpy(HEADERS[headers_index].header, header, HEADER_HEADER_LIM);
+		strncpy(HEADERS[headers_index].value, value, HEADER_VALUE_LIM);
+	}
+}
 
 // Get POST data
 char * post(char * name) {
