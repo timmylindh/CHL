@@ -26,30 +26,29 @@ void headers() {
 
 	for(i = 0; i < headers_index; i++) {
 		if(i == (headers_index - 1)) {
-			printf("%s: %s\n\n", HEADERS[headers_index].header, HEADERS[headers_index].value);
+			printf("%s: %s\n\n", HEADERS[i].header, HEADERS[i].value);
 			break;
 		}
 
-		printf("%s: %s\n", HEADERS[headers_index].header, HEADERS[headers_index].value);
+		printf("%s: %s\n", HEADERS[i].header, HEADERS[i].value);
 	}
 
 }
 
 // Initialize standard headers
 void headers_init() {
-	strncpy(HEADERS[headers_index].header, "Content-type", HEADER_HEADER_LIM);
-	strncpy(HEADERS[headers_index++].value, "text/html", HEADER_VALUE_LIM);
+	set_header("content-type", "text/html");
 }
 
 // Get header value
 char * get_header(char * header) {
 	int i;
-	for(i = 0; (i < headers_index) && strncmp(header, HEADERS[headers_index].header, HEADER_HEADER_LIM); i++);
+	for(i = 0; (i < headers_index) && strncmp(header, HEADERS[i].header, HEADER_HEADER_LIM); i++);
 
 	if(i == headers_index)
 		return NULL;
 
-	return HEADERS[headers_index].value;
+	return HEADERS[i].value;
 
 }
 
@@ -63,15 +62,15 @@ void set_header(char * header, char * value) {
 	}
 
 	for(i = 0; i < headers_index; i++) {
-		if(! strncmp(header, HEADERS[headers_index].header, HEADER_HEADER_LIM)) {
-			strncpy(HEADERS[headers_index].value, value, HEADER_VALUE_LIM);
+		if(! strncmp(header, HEADERS[i].header, HEADER_HEADER_LIM)) {
+			strncpy(HEADERS[i].value, value, HEADER_VALUE_LIM);
 			break;
 		}
 	}
 
 	if(i == headers_index) {
 		strncpy(HEADERS[headers_index].header, header, HEADER_HEADER_LIM);
-		strncpy(HEADERS[headers_index].value, value, HEADER_VALUE_LIM);
+		strncpy(HEADERS[headers_index++].value, value, HEADER_VALUE_LIM);
 	}
 }
 
