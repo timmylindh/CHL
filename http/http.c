@@ -1,7 +1,43 @@
 #include "http.h"
+#include "../core/cgi.h"
 
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
+
+// Get POST data
+char * post(char * name) {
+	int i;
+
+	for(i = 0; (i < post_index) && strncmp(name, POST[i].name, QUERY_NAME_LIM); i++);
+
+	if(i == post_index)
+		return NULL;
+
+	return POST[i].value;
+}
+
+// Get GET data
+char * get(char * name) {
+	int i;
+
+	for(i = 0; (i < get_index) && strncmp(name, GET[i].name, QUERY_NAME_LIM); i++);
+
+	if(i == get_index)
+		return NULL;
+
+	return GET[i].value;
+}
+
+// Get size of GET array
+int get_size() {
+	return get_index;
+}
+
+// Get size of POST array
+int post_size() {
+	return post_index;
+}
 
 // Decode URL
 void url_decode(char * str) {

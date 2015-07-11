@@ -1,7 +1,7 @@
 #ifndef ERROR_H_
 #define ERROR_H_
 
-#include "../types.h"
+#include "../core/types.h"
 
 // Error codes
 #define ERRNO_VFS_OVERFLOW 1

@@ -1,7 +1,7 @@
 #ifndef VAS_H_
 #define VAS_H_
 
-#include "../types.h"
+#include "../core/types.h"
 
 #define VASITEM_NAME_LIM 20
 #define VIEW_FUNCTION_SPACE_LIM 500

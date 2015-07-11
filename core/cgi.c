@@ -1,6 +1,6 @@
 #include "cgi.h"
 #include "../error/error.h"
-#include "../types.h"
+#include "../core/types.h"
 #include "../http/http.h"
 
 #include <stdlib.h>
@@ -15,16 +15,11 @@
 Host _host;
 Request _request;
 
-typedef struct {
-	char name[QUERY_NAME_LIM];
-	char value[QUERY_VALUE_LIM];
-} QUERY_ITEM;
+QUERY_ITEM POST[POST_LIM];
+QUERY_ITEM GET[POST_LIM];
 
-static QUERY_ITEM POST[POST_LIM];
-static QUERY_ITEM GET[POST_LIM];
-
-static t_INDEX post_index = 0;
-static t_INDEX get_index = 0;
+t_INDEX post_index = 0;
+t_INDEX get_index = 0;
 
 static void init_host();
 static void init_request();

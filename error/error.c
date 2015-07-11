@@ -1,5 +1,5 @@
 #include "error.h"
-#include "../types.h"
+#include "../core/types.h"
 #include <string.h>
 #include <stdio.h>
 

@@ -1,5 +1,5 @@
 #include "vas.h"
-#include "../types.h"
+#include "../core/types.h"
 #include "../error/error.h"
 #include <string.h>
 
