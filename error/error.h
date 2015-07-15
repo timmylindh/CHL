@@ -10,6 +10,9 @@
 #define ERRNO_GET_OVERFLOW 4
 #define ERRNO_POST_OVERFLOW 5
 #define ERRNO_HEADERS_OVERFLOW 6
+#define ERRNO_INVALID_SYNTAX 7
+#define ERRNO_UNKNOWN_FUNCTION 8
+#define ERRNO_INVALID_ARGS 9
 
 // Get current error number
 t_ERROR get_errno();

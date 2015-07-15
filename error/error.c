@@ -56,6 +56,18 @@ void eget_error(t_ERROR errno, char * str, int str_size) {
 			strncpy(error, "HEADERS memory overflow", ERROR_LIM);
 			break;
 
+		case ERRNO_INVALID_SYNTAX:
+			snprintf(error, ERROR_LIM, "In '%s', invalid syntax", spec);
+			break;
+
+		case ERRNO_UNKNOWN_FUNCTION:
+			snprintf(error, ERROR_LIM, "Unknown function '%s'", spec);
+			break;
+
+		case ERRNO_INVALID_ARGS:
+			snprintf(error, ERROR_LIM, "Invalid arguments for function '%s'", spec);
+			break;
+
 		default:
 			strncpy(error, "No error", ERROR_LIM);
 			break;

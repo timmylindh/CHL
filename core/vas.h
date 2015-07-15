@@ -17,9 +17,12 @@ extern VASItem vfs[VIEW_FUNCTION_SPACE_LIM];
 extern VASItem vvs[VIEW_VARIABLE_SPACE_LIM];
 
 // Push function to vfs
-void fpush(const char * name, t_ADDRESS address);
+void fpush(const char * name, CHL_FUNC address);
 
 // Push variable to vvs
 void vpush(const char * name, t_ADDRESS address);
+
+// Get function address of name
+t_ADDRESS fpop(const char * name);
 
 #endif /* VAS_H_ */

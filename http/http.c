@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdio.h>
 
+
 #define HEADER_HEADER_LIM 30
 #define HEADER_VALUE_LIM 50
 #define HEADERS_LIM 10
@@ -20,8 +21,13 @@ typedef struct {
 static Header HEADERS[HEADERS_LIM];
 static t_INDEX headers_index = 0;
 
+static char headers_state = 0;
+
 // Output headers
 void headers() {
+	if(headers_state)
+		return;
+
 	int i;
 
 	for(i = 0; i < headers_index; i++) {
@@ -33,6 +39,7 @@ void headers() {
 		printf("%s: %s\n", HEADERS[i].header, HEADERS[i].value);
 	}
 
+	headers_state = 1;
 }
 
 // Initialize standard headers
