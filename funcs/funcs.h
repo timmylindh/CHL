@@ -5,5 +5,6 @@
 
 // Execute function [name]
 t_STATE function(char * name, char * args);
+void fargs(ARGS args, ...);
 
 #endif /* FUNCS_H_ */

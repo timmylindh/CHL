@@ -20,7 +20,7 @@ extern VASItem vvs[VIEW_VARIABLE_SPACE_LIM];
 void fpush(const char * name, CHL_FUNC address);
 
 // Push variable to vvs
-void vpush(const char * name, t_ADDRESS address);
+void vpush(const char * name, void * address);
 
 // Get function address of name
 t_ADDRESS fpop(const char * name);

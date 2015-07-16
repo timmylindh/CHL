@@ -27,13 +27,15 @@ void fpush(const char * name,  CHL_FUNC address) {
 }
 
 // Push item to vvs
-void vpush(const char * name, t_ADDRESS address) {
+void vpush(const char * name, void * address) {
 	if(vvs_index > VIEW_VARIABLE_SPACE_LIM) {
 		set_errno(ERRNO_VVS_OVERFLOW, NULL);
 		return;
 	}
 
-	vvs[vvs_index].address = address;
+	volatile uintptr_t pt = (uintptr_t) address;
+
+	vvs[vvs_index].address = (t_ADDRESS) pt;
 	strncpy(vvs[vvs_index].name, name, VASITEM_NAME_LIM);
 
 	vvs_index++;

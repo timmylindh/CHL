@@ -45,6 +45,7 @@ void headers() {
 // Initialize standard headers
 void headers_init() {
 	set_header("content-type", "text/html");
+	set_header("x-powered-by", "CHL v.01 PRE ALPHA");
 }
 
 // Get header value

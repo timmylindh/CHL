@@ -132,7 +132,7 @@ static t_STATE proc_inline(char ** code, char ** out) {
 		first = 1;
 	}
 
-	// An error accoured
+	// An error occoured
 	if(**code == '\0') {
 		set_errno(ERRNO_INVALID_SYNTAX, file_name);
 		return 0;
@@ -144,7 +144,7 @@ static t_STATE proc_inline(char ** code, char ** out) {
 	return 1;
 }
 
-// Called ever loop until name is acquired
+// Called every loop until name is acquired
 static inline t_STATE get_function_name(char ** name, t_STATE * first) {
 	// Done
 	if(**name == '(') {
