@@ -1,7 +1,9 @@
 #include "error.h"
 #include "../core/types.h"
+
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define SPEC_LIM 20
 #define ERROR_LIM 100
@@ -23,13 +25,13 @@ void set_errno(t_ERROR errno, char * other) {
 }
 
 // Get textual representation of current errno
-void get_error(char * str, int str_size) {
-	eget_error(errorn, str, str_size);
+char * get_error() {
+	return eget_error(errorn);
 }
 
 // Get textual representation of t_ERROR errno
-void eget_error(t_ERROR errno, char * str, int str_size) {
-	char error[ERROR_LIM];
+char * eget_error(t_ERROR errno) {
+	char * error = malloc(ERROR_LIM);
 
 	switch(errno) {
 		case ERRNO_VFS_OVERFLOW:
@@ -73,5 +75,5 @@ void eget_error(t_ERROR errno, char * str, int str_size) {
 			break;
 	}
 
-	strncpy(str, error, str_size);
+	return error;
 }

@@ -1,6 +1,12 @@
 #ifndef HTTP_H_
 #define HTTP_H_
 
+#include "cookies.h"
+
+#define HEADER_HEADER_LIM 30
+#define HEADER_VALUE_LIM 100
+#define HEADERS_LIM 10
+
 // Output headers
 void headers();
 
@@ -9,6 +15,9 @@ void headers_init();
 
 // Set header value
 void set_header(char * header, char * value);
+
+// Set header, create a new one if already exists
+void set_header_new(char * header, char * value);
 
 // Get header value
 char * get_header(char * header);

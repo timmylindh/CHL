@@ -8,11 +8,6 @@
 #include <string.h>
 #include <stdio.h>
 
-
-#define HEADER_HEADER_LIM 30
-#define HEADER_VALUE_LIM 50
-#define HEADERS_LIM 10
-
 typedef struct {
 	char header[HEADER_HEADER_LIM];
 	char value[HEADER_VALUE_LIM];
@@ -82,8 +77,22 @@ void set_header(char * header, char * value) {
 	}
 }
 
+// Set header, create a new one if already exists
+void set_header_new(char * header, char * value) {
+	if(headers_index > HEADERS_LIM) {
+		set_errno(ERRNO_HEADERS_OVERFLOW, NULL);
+		return;
+	}
+
+	strncpy(HEADERS[headers_index].header, header, HEADER_HEADER_LIM);
+	strncpy(HEADERS[headers_index++].value, value, HEADER_VALUE_LIM);
+}
+
 // Get POST data
 char * post(char * name) {
+	if(! post_state)
+		init_post();
+
 	int i;
 
 	for(i = 0; (i < post_index) && strncmp(name, POST[i].name, QUERY_NAME_LIM); i++);
@@ -96,6 +105,9 @@ char * post(char * name) {
 
 // Get GET data
 char * get(char * name) {
+	if(! get_state)
+		init_get();
+
 	int i;
 
 	for(i = 0; (i < get_index) && strncmp(name, GET[i].name, QUERY_NAME_LIM); i++);

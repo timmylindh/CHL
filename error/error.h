@@ -18,10 +18,10 @@
 t_ERROR get_errno();
 
 // Get textual error based on get_errno
-void get_error(char * str, int str_size);
+char * get_error();
 
 // Get textual error based on specified errno
-void eget_error(t_ERROR errno, char * str, int str_size);
+char * eget_error(t_ERROR errno);
 
 // Set error number
 void set_errno(t_ERROR errno, char * other);
