@@ -10,177 +10,192 @@
 #include <string.h>
 #include <ctype.h>
 
-#define OUTPUT_LIM 400
-#define ST_FUNC_NAME 1
-#define ST_FUNC_ARGS 2
-#define ST_FUNC_DONE 3
+// Operation states
+#define STATE_FUNC_NAME 1
+#define STATE_FUNC_ARGS 2
+#define STATE_FUNC_DONE 3
 
-// Static char to access file name from other functions
-static char * file_name;
+#define NEW_LINE (*buff == '\n')
+#define INLINE_START ((*buff == '<') && (*(buff + 1) == '{'))
+#define INLINE_END ((*buff == '}') && (*(buff + 1) == '>'))
+#define OUTPUT(str) fputs(str, stdout)
 
-static void interpret(char * buff);
-static t_STATE proc_inline(char ** start, char ** out);
-static void output(char * buff, char ** out, t_INDEX * size);
-static inline t_STATE get_function_name(char ** name, t_STATE * first);
-static inline t_STATE get_function_args(char ** args, t_STATE * first);
+
+static char * file_name; // File name
+static t_INDEX linenr; // Current line
+static char * buff; // File buffer
+static t_STATE state; // Next operation
+static char * func_name; // Current function name
+static char * func_args; // Current function arguments
+
+void view(char * file);
+static void interpret();
+static t_STATE parse_inline(char ** out);
+static inline t_STATE get_function_name(t_STATE * first);
+static inline t_STATE get_function_args(t_STATE * first);
 
 // Open a view
 void view(char * file) {
-	char * buff;
+	char * start;
 
 	file_name = file;
+	linenr = 1;
+	state = 0;
+
 	headers();
 
-	if((buff = file_get_all(file)) == NULL) {
-		free(buff);
+	if((start = file_get_all(file)) == NULL) {
+		free(start);
 		return;
 	}
 
-	interpret(buff);
-	free(buff);
+	buff = start;
+
+	interpret();
+	free(start);
 }
 
-// Interpret view buffer
-static void interpret(char * buff) {
+// Interpret the file buffer, go through every character
+static void interpret() {
 	char * out;
-	t_INDEX output_size;
 
-	output_size = 0;
 	out = buff;
 
 	while(*buff != '\0') {
-		if(output_size == OUTPUT_LIM) // Time to output
-			output(buff, &out, &output_size);
+		if(NEW_LINE)
+			linenr++;
 
-		// Handle inline code
-		if((*buff == '<') && (*(buff + 1) == '{')) {
-			output(buff, &out, &output_size);
+		// Inline code
+		else if(INLINE_START) {
+			*buff = '\0';
 			buff += 2;
 
-			proc_inline(&buff, &out);
+			OUTPUT(out);
+
+			if(! parse_inline(&out)) {
+				print_error();
+				return;
+			}
+
 			continue;
 		}
 
-		output_size++;
 		buff++;
 	}
 
-	if(output_size != 0) {
-		*buff = '\0';
-		fputs(out, stdout);
-	}
+	OUTPUT(out); // Output last characters in buffer
 }
 
-// Output buffer to stdout, works with OUTPUT_LIM
-static void output(char * buff, char ** out, t_INDEX * size) {
-	char last;
+// Handle and execute inline code, advanced sh*t
+static t_STATE parse_inline(char ** out) {
+	t_STATE first;
 
-	last = *buff;
-	*buff = '\0';
-
-	fputs(*out, stdout);
-	*buff = last;
-
-	*out += *size;
-	*size = 0;
-}
-
-// Process inline C code, advanced sh*t
-static t_STATE proc_inline(char ** code, char ** out) {
-	char * func_name;
-	char * func_args;
-	t_STATE state = 0;
-	t_STATE first = 0;
-
-	// Check if end of code, or null char
-	while(((**code != '}') && (*(*code + 1) != '>')) && (**code != '\0')) {
+	while(*buff != '\0') {
 		switch(state) {
-			case ST_FUNC_NAME: // Get function name state
-				(first) ? (func_name = *code) : 0;
-				state = get_function_name(code, &first);
-
-				continue;
-
-			case ST_FUNC_ARGS: // Get function args state
-				(first) ? (func_args = *code) : 0;
-				state = get_function_args(code, &first);
-
-				continue;
-
-			case ST_FUNC_DONE: // Handle function, done
-				if(! function(func_name, func_args))
+			case STATE_FUNC_NAME: // Get function name
+				if(! (state = get_function_name(&first)))
 					return 0;
 
-				state = 0;
+				continue;
 
+			case STATE_FUNC_ARGS: // Get function arguments
+				if(! (state = get_function_args(&first)))
+					return 0;
+
+				continue;
+
+			case STATE_FUNC_DONE: // Done, execute function
+				if(! function(func_name, func_args)) {
+					SET_ERROR("Unknown function %s in view '%s' on line %d", func_name, file_name, linenr);
+					return 0;
+				}
+
+				state = 0;
 				break;
 		}
 
-		if(isspace(**code)) {
-			(*code)++;
+		if(INLINE_END)
+			break;
+
+		if(NEW_LINE) {
+			linenr++;
+			buff++;
+
 			continue;
 		}
 
-		// If first char in function name is not alpha, return
-		if(! isalpha(**code)) {
-			set_errno(ERRNO_INVALID_SYNTAX, file_name);
+		if(isspace(*buff)) {
+			buff++;
+			continue;
+		}
+
+		// Unvalid function name
+		if(isdigit(*buff)) {
+			SET_ERROR("Unexpected character '%c', in view '%s' on line %d", *buff, file_name, linenr);
 			return 0;
 		}
 
-		// Set state to get function name
-		state = ST_FUNC_NAME;
+		state = STATE_FUNC_NAME;
 		first = 1;
 	}
 
-	// An error occoured
-	if(**code == '\0') {
-		set_errno(ERRNO_INVALID_SYNTAX, file_name);
+	// No ending }> found
+	if(*buff == '\0') {
+		SET_ERROR("Unexpected end of view '%s' on line %d, expected '}>'", file_name, linenr);
 		return 0;
 	}
 
-	*code += 2;
-	*out = *code;
+	buff += 2;
+	*out = buff;
 
 	return 1;
 }
 
-// Called every loop until name is acquired
-static inline t_STATE get_function_name(char ** name, t_STATE * first) {
-	// Done
-	if(**name == '(') {
-		*first = 1;
-		*((*name)++) = '\0';
-
-		return ST_FUNC_ARGS;
+// Get function name
+static inline t_STATE get_function_name(t_STATE * first) {
+	if(*first) { // Is it a new function?
+		func_name = buff;
+		*first = 0;
 	}
 
-	if(*((*name) + 1) == '}')
-		set_errno(ERRNO_INVALID_SYNTAX, file_name);
+	if(*buff == '(') { // Is the function name done?
+		*buff++ = '\0';
+		*first = 1;
 
-	// Continue
-	*first = 0;
-	(*name)++;
+		return STATE_FUNC_ARGS;
+	}
 
-	return ST_FUNC_NAME;
+	if(INLINE_END) { // Is the end of code reached?
+		SET_ERROR("Syntax error: missing '(' in view '%s' on line %d", file_name, linenr);
+		return 0;
+	}
+
+	buff++;
+	return STATE_FUNC_NAME; // Continue with name
 }
 
-// Called every loop until args are acquired
-static inline t_STATE get_function_args(char ** args, t_STATE * first) {
-	// Done
-	if((**args == ')') && (*((*args) + 1) == ';')) {
-		*first = 1;
-		**args = '\0';
-
-		*args += 2;
-		return ST_FUNC_DONE;
+// Get function arguments
+static inline t_STATE get_function_args(t_STATE * first) {
+	if(*first) {
+		func_args = buff;
+		*first = 0;
 	}
 
-	if(*((*args) + 1) == '}')
-		set_errno(ERRNO_INVALID_SYNTAX, file_name);
+	// Is the end of arguments reached?
+	if((*buff == ')') && (*(buff + 1) == ';')) {
+		*buff = '\0';
+		buff += 2;
 
-	// Continue
-	*first = 0;
-	(*args)++;
+		*first = 1;
 
-	return ST_FUNC_ARGS;
+		return STATE_FUNC_DONE; // Execute function
+	}
+
+	if(INLINE_END) {
+		SET_ERROR("Unexpected end of function '%s', in view '%s on line %d, expected ');'", func_name, file_name, linenr);
+		return 0;
+	}
+
+	buff++;
+	return STATE_FUNC_ARGS; // Continue with args
 }
