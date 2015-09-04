@@ -3,8 +3,12 @@
 
 #include "../core/types.h"
 
+typedef struct {
+	ARGS argument;
+	t_STATE type;
+} Argument;
+
 // Execute function [name]
-t_STATE function(char * name, char * args);
-void fargs(ARGS args, ...);
+t_STATE function(char * name, ARGS args);
 
 #endif /* FUNCS_H_ */

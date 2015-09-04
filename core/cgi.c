@@ -104,12 +104,12 @@ static void set_query_item(char * str, short method) {
 		return;
 
 	if(get_index > GET_LIM) {
-		set_errno(ERRNO_GET_OVERFLOW, NULL);
+		SET_ERROR("GET buffer overflow.");
 		return;
 	}
 
 	if(post_index > POST_LIM) {
-		set_errno(ERRNO_POST_OVERFLOW, NULL);
+		SET_ERROR("POST buffer overflow.");
 		return;
 	}
 

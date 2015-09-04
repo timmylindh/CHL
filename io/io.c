@@ -52,7 +52,7 @@ static int fopen_read(char * file, FILE ** fp) {
 	if((*fp = fopen(file, "rb")) == NULL) {
 		switch(errno) {
 			case ENOENT:
-				set_errno(ERRNO_FILE_NOT_FOUND, file);
+				SET_ERROR("File: '%s' not found.", file);
 				break;
 		}
 

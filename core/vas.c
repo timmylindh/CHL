@@ -2,6 +2,7 @@
 #include "../core/types.h"
 #include "../error/error.h"
 
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -14,7 +15,7 @@ VASItem vvs[VIEW_VARIABLE_SPACE_LIM];
 // Push item to vfs
 void fpush(const char * name,  CHL_FUNC address) {
 	if(vfs_index > VIEW_FUNCTION_SPACE_LIM) {
-		set_errno(ERRNO_VFS_OVERFLOW, NULL);
+		SET_ERROR("View function space overflow.");
 		return;
 	}
 
@@ -29,7 +30,7 @@ void fpush(const char * name,  CHL_FUNC address) {
 // Push item to vvs
 void vpush(const char * name, void * address) {
 	if(vvs_index > VIEW_VARIABLE_SPACE_LIM) {
-		set_errno(ERRNO_VVS_OVERFLOW, NULL);
+		SET_ERROR("View variable space overflow");
 		return;
 	}
 

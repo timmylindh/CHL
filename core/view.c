@@ -21,12 +21,13 @@
 #define OUTPUT(str) fputs(str, stdout)
 
 
-static char * file_name; // File name
-static t_INDEX linenr; // Current line
+char * file_name; // File name
+t_INDEX linenr; // Current line
 static char * buff; // File buffer
 static t_STATE state; // Next operation
 static char * func_name; // Current function name
-static char * func_args; // Current function arguments
+static ARGS func_args; // Current function arguments
+static t_STATE in_str; // In string or not
 
 void view(char * file);
 static void interpret();
@@ -89,6 +90,7 @@ static void interpret() {
 // Handle and execute inline code, advanced sh*t
 static t_STATE parse_inline(char ** out) {
 	t_STATE first;
+	in_str = 0;
 
 	while(*buff != '\0') {
 		switch(state) {
@@ -176,13 +178,28 @@ static inline t_STATE get_function_name(t_STATE * first) {
 
 // Get function arguments
 static inline t_STATE get_function_args(t_STATE * first) {
+	static char delim;
+
+	// Is it the first loop?
 	if(*first) {
-		func_args = buff;
+		func_args = (ARGS) buff;
 		*first = 0;
 	}
 
+	// Check if in string
+	if((*buff == '"') || (*buff == '\'')) {
+		if(*buff == delim) {
+			in_str = 0;
+			delim = 0;
+		}
+		else {
+			in_str = 1;
+			delim = *buff;
+		}
+	}
+
 	// Is the end of arguments reached?
-	if((*buff == ')') && (*(buff + 1) == ';')) {
+	else if((*buff == ')') && (*(buff + 1) == ';')) {
 		*buff = '\0';
 		buff += 2;
 
@@ -191,7 +208,8 @@ static inline t_STATE get_function_args(t_STATE * first) {
 		return STATE_FUNC_DONE; // Execute function
 	}
 
-	if(INLINE_END) {
+	// Check if inline end
+	else if(INLINE_END && !in_str) {
 		SET_ERROR("Unexpected end of function '%s', in view '%s on line %d, expected ');'", func_name, file_name, linenr);
 		return 0;
 	}

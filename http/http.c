@@ -15,8 +15,7 @@ typedef struct {
 
 static Header HEADERS[HEADERS_LIM];
 static t_INDEX headers_index = 0;
-
-static char headers_state = 0;
+static t_STATE headers_state = 0;
 
 // Output headers
 void headers() {
@@ -39,8 +38,8 @@ void headers() {
 
 // Initialize standard headers
 void headers_init() {
-	set_header("content-type", "text/html");
-	set_header("x-powered-by", "CHL v.01 PRE ALPHA");
+	set_header("Content-Type", "text/html");
+	set_header("X-Powered-By", "CHL v.01 PRE ALPHA");
 }
 
 // Get header value
@@ -60,7 +59,7 @@ void set_header(char * header, char * value) {
 	int i;
 
 	if(headers_index > HEADERS_LIM) {
-		set_errno(ERRNO_HEADERS_OVERFLOW, NULL);
+		SET_ERROR("Headers buffer overflow.");
 		return;
 	}
 
@@ -80,7 +79,7 @@ void set_header(char * header, char * value) {
 // Set header, create a new one if already exists
 void set_header_new(char * header, char * value) {
 	if(headers_index > HEADERS_LIM) {
-		set_errno(ERRNO_HEADERS_OVERFLOW, NULL);
+		SET_ERROR("Headers buffer overflow.");
 		return;
 	}
 
