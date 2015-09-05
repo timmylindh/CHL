@@ -23,10 +23,10 @@ char * file_get_all(char * file) {
 	if((file_size = file_get_size(file)) < 0)
 		return NULL;
 
-	buff = malloc(file_size);
+	buff = malloc(file_size + 1);
 	nread = fread(buff, sizeof(char), file_size, fp);
 
-	buff[nread] = '\0';
+	buff[file_size] = '\0';
 
 	fclose(fp);
 	return buff;
