@@ -23,7 +23,7 @@ Web applications written in C must somehow be executed by the Web server since C
 First you will want to enable CGI scripts in the Apache2 configuration file (*/etc/apache2/apache2.conf*).
 
 ```bash
-vim /etc/apache2/apaceh2.conf
+vim /etc/apache2/apache2.conf
 ```
 Look for a line that says: *"\<Directory /var/www/>"*. Add the following inside of it:
 
