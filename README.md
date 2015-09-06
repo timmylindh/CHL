@@ -41,4 +41,11 @@ Now you will have to enable the CGI module as well.
 a2enmod cgi
 ```
 
+Restart Apache and you are good to go.
+
+```bash
+service apache2 restart
+```
+
+
 
