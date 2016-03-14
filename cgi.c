@@ -12,6 +12,7 @@
 #define GET_DATA_ENV "QUERY_STRING" // GET data environment variable
 #define METHOD_POST 1
 #define METHOD_GET 0
+#define METHOD_POST_NREAD 2000 // POST data bytes per interation limit
 
 // A struct to hold CGI [method] data
 typedef struct {
@@ -20,15 +21,15 @@ typedef struct {
 } CGI_METHOD_DATA;
 
 
-CGI_METHOD_DATA * POST; // Struct for CGI POST data, dynamically allocated
-CGI_METHOD_DATA * GET; // Struct for CGI GET data, dynamically allocated
-char post_size = 0, get_size = 0; // Size of [method] structs
+static CGI_METHOD_DATA * POST; // Struct array for CGI POST data, dynamically allocated
+static CGI_METHOD_DATA * GET; // Struct array for CGI GET data, dynamically allocated
+static unsigned char post_size = 0, get_size = 0; // Size of [method] structs
 
 // Buffer for [method] data, dynamically allocated
-char * raw_data_post, * raw_data_get;
+static char * raw_data_post, * raw_data_get;
 
 // Whether [method] has been successfully manipulated or not
-char post_used = 0, get_used = 0;
+static char post_used = 0, get_used = 0;
 
 // Function for reading environment variables from server
 char * get_env(char * var_name) {
@@ -47,11 +48,13 @@ void method_post_init() {
 		return;
 
 	// Allocate memory for POST data
-	raw_data_post = malloc(CGI_POST_LIM * sizeof(char)); // POST data
+	raw_data_post = malloc(METHOD_POST_NREAD * sizeof(char)); // POST data
+
+	//Append temporary blank variable to POST array to prevent NULL error, overwritten
+	method_append_var(" ", " ", METHOD_POST);
 
 	// Assign raw_data_post its value
-	fgets(raw_data_post, CGI_POST_LIM, stdin);
-	raw_data_post[CGI_POST_LIM] = '\0';
+	method_post_read_input();
 
 	// Split data into variables, url-decode
 	format_data(raw_data_post, METHOD_POST);
@@ -64,12 +67,11 @@ void method_get_init() {
 	if(get_used) // Check if the GET data has already been interpreted
 		return;
 
-	// Allocate memory for GET data
-	raw_data_get = malloc(CGI_GET_LIM * sizeof(char)); // GET data
+	// Append temporary blank variable to GET array to prevent NULL error, overwritten
+	method_append_var(" ", " ", METHOD_GET);
 
-	// Assign raw_data_post its value
-	strncpy(raw_data_get, get_env(GET_DATA_ENV), CGI_GET_LIM);
-	raw_data_post[CGI_GET_LIM] = '\0';
+	// Assign [raw_data_get] its value
+	raw_data_get = get_env(GET_DATA_ENV);
 
 	// Split data into variables, url-decode
 	format_data(raw_data_get, METHOD_GET);
@@ -83,11 +85,7 @@ void format_data(char * data, const char method) {
 	char * var_name, * var_value; // Pointer to variable in [data]
 
 	last_var = data;
-
-	// Initialize allocation of memory to [method] struct
-	(method == METHOD_POST) ?
-			(POST = malloc(sizeof(CGI_METHOD_DATA)))
-			: (GET = malloc(sizeof(CGI_METHOD_DATA)));
+	var_name = data;
 
 	// Loop through [data] and interpret the data
 	while(*data != '\0') {
@@ -108,11 +106,9 @@ void format_data(char * data, const char method) {
 
 			last_var = data;
 
-			// Decode HTTP URL GET data
-			if(method == METHOD_GET) {
-				http_url_decode(var_name);
-				http_url_decode(var_value);
-			}
+			// Decode HTTP data
+			http_form_decode(var_name);
+			http_form_decode(var_value);
 
 			// Append variable to method struct
 			method_append_var(var_name, var_value, method);
@@ -123,10 +119,10 @@ void format_data(char * data, const char method) {
 			*data = '\0';
 
 			// Set name, and set value to null
-			var_value = data++;
+			var_value = data;
 			var_name = last_var;
 
-			last_var = data;
+			last_var = ++data;
 
 			// Append variable to [method] struct
 			method_append_var(var_name, var_value, method);
@@ -136,10 +132,16 @@ void format_data(char * data, const char method) {
 		else
 			data++;
 	}
+
+	// A variable only defined with a variable name, and without '='
+	if(var_name == last_var) {
+		var_value = data;
+		method_append_var(var_name, var_value, method);
+	}
 }
 
-// Decode HTTP URL GET data
-void http_url_decode(char * str) {
+// Decode HTTP FORM data
+void http_form_decode(char * str) {
 	char * decoded; // The final decoded string
 	decoded = str;
 
@@ -149,7 +151,12 @@ void http_url_decode(char * str) {
 
 	// Loop through string and interpret characters
 	while(*str != '\0') {
-		if((*str == '%') && (isxdigit(str[1]) && isxdigit(str[2]))) {
+		if(*str == '+') {
+			*decoded++ = ' ';
+			str++;
+		}
+
+		else if((*str == '%') && (isxdigit(str[1]) && isxdigit(str[2]))) {
 			{
 				if(str[1] >= 'a')
 					str[1] -= ('a' - 'A');
@@ -181,6 +188,10 @@ void http_url_decode(char * str) {
 
 // Append a variable to [method] array
 void method_append_var(char * name, char * value, const char method) {
+	// Prevent char overflow, a greater number than 512
+	if((post_size >= 510) || (get_size >= 510))
+		return;
+
 	switch(method) {
 		case METHOD_POST:
 			// Allocate memory for new variable
@@ -220,7 +231,7 @@ char * chl_post(char * name) {
 		return POST[i].value;
 
 	// Did not find a match
-	return NULL;
+	return 0;
 }
 
 // Returns variable [name]'s value in GET data array
@@ -239,6 +250,27 @@ char * chl_get(char * name) {
 		return GET[i].value;
 
 	// Did not find a match
-	return NULL;
+	return 0;
+}
+
+// Read POST data from stdin
+void method_post_read_input() {
+	int ntotal = 0; // Total bytes read
+	int nread; // Bytes read in one iteration
+	int iteration = 1; // Number of iterations
+
+	// Read data from stdin [METHOD_POST_NREAD] bytes at time, allocate more memory if needed
+	while((nread = fread(raw_data_post + ntotal, sizeof(char), METHOD_POST_NREAD, stdin)) == METHOD_POST_NREAD) {
+		// Limit to CGI_POST_LIM bytes
+		if((++iteration * METHOD_POST_NREAD) >= CGI_POST_LIM)
+			return;
+
+		// Allocate more memory for POST data
+		raw_data_post = realloc(raw_data_post, iteration * METHOD_POST_NREAD);
+		ntotal += nread;
+	}
+
+	// Null terminate data
+	raw_data_post[ntotal + nread] = '\0';
 }
 
