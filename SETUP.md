@@ -110,4 +110,9 @@ Change the *DirectoryIndex* of *\<VirtualHost \*:80\>* to include *'index.chl'*
 </virtualhost>
 ```
 
+Restart Apache2 to enable changes
+```bash
+service apache2 restart
+```
+
 Now that you have successfully installed CHL on your system, learn how to use CHL here: (link soon)
