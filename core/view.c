@@ -13,28 +13,25 @@
 
 #define BUFF_BLOCK_SIZE 2000 // Size per allocation for [buffer]
 
-static FILE * fd; // File stream to [view_path]
-static char * buff; // Buffer to contain file data, dynamically allocated
-static char * path; // Path to view file
-
 // Open and interpret view [view_path]
 void chl_view(char * view_path) {
-	path = view_path;
+	FILE * fd; // File stream to [view_path]
+	char * buff; // Buffer to contain file data, dynamically allocated
 
 	// Output headers
 	chl_set_default_headers();
 	chl_print_headers();
 
 	// Open file [view_path] for reading
-	if(! file_read_open())
+	if(! file_read_open(view_path, &fd))
 		goto print_error;
 
 	// Read data from file
-	if(! file_read_data())
+	if(! file_read_data(&buff, view_path, fd))
 		goto print_error;
 
 	// Parse and interpret view
-	parse_view();
+	parse_view(&buff, view_path);
 
 	// Print errors if any
 	print_error:
@@ -45,9 +42,9 @@ void chl_view(char * view_path) {
 
 
 // Open file [path] for reading
-char file_read_open() {
+char file_read_open(char * path, FILE ** fd) {
 	// Open file for reading
-	if((fd = fopen(path, "r")) != NULL)
+	if((*fd = fopen(path, "r")) != NULL)
 		return 1; // Return success
 
 	// Failed to open file, set appropriate error
@@ -73,16 +70,16 @@ char file_read_open() {
 }
 
 // Read data from file [fd], allocate more memory for [buff] if needed
-char file_read_data() {
+char file_read_data(char ** buff, char * path, FILE * fd) {
 	int iteration = 1; // Number of iterations
 	int ntotal = 0; // Total bytes read
 	int nread; // Bytes read in one iteration
 
 	 // Allocate memory for [buff]
-	buff = malloc(BUFF_BLOCK_SIZE * sizeof(char));
+	*buff = malloc(BUFF_BLOCK_SIZE * sizeof(char));
 
 	// Read data from stdin [BUFF_BLOCK_SIZE] bytes at time, allocate more memory if needed
-	while((nread = fread(buff + ntotal, sizeof(char), BUFF_BLOCK_SIZE, fd)) == BUFF_BLOCK_SIZE) {
+	while((nread = fread(*buff + ntotal, sizeof(char), BUFF_BLOCK_SIZE, fd)) == BUFF_BLOCK_SIZE) {
 		// Limit to [BUFF_BLOCK_SIZE] bytes
 		if((++iteration * BUFF_BLOCK_SIZE) >= VIEW_SIZE_LIM) {
 			// Error too big file
@@ -91,46 +88,46 @@ char file_read_data() {
 		}
 
 		// Allocate more memory for buff
-		buff = realloc(buff, iteration * VIEW_SIZE_LIM);
+		*buff = realloc(*buff, iteration * VIEW_SIZE_LIM);
 		ntotal += nread;
 	}
 
 	// Null terminate data
-	buff[ntotal + nread] = '\0';
+	(*buff)[ntotal + nread] = '\0';
 
 	return 1;
 }
 
 // Parse and interpret view file [buff]
-void parse_view() {
+void parse_view(char ** buff, char * path) {
 	int line_nr = 1; // Current line number
 	char * output; // Pointer to end of last output index
 
-	output = buff;
+	output = *buff;
 
 	// Loop through [buff] and interpret data
-	while(*buff != '\0') {
+	while(**buff != '\0') {
 		// If new line
-		if(*buff == '\n')
+		if(**buff == '\n')
 			line_nr++;
 
 		// If start of inline code
-		else if((*buff == '<') && (*(buff + 1) == '{')) {
-			*buff = '\0'; // End of string before output
-			buff += 2; // Jump to inline code start
+		else if((**buff == '<') && (*(*buff + 1) == '{')) {
+			**buff = '\0'; // End of string before output
+			*buff += 2; // Jump to inline code start
 
 			// Output everything before inline code
 			fputs(output, stdout);
 
 
 			// Parse inline code
-			if(! parse_inline(&buff, path, &line_nr))
+			if(! parse_inline(buff, path, &line_nr))
 				return;
 
-			output = buff;
+			output = *buff;
 		}
 
-		buff++;
+		(*buff)++;
 	}
 
 	// Output last bytes
@@ -139,18 +136,19 @@ void parse_view() {
 
 // Import file [file_path] contents
 void chl_import(char * file_path) {
-	path = file_path;
+	FILE * fd; // File stream to [view_path]
+	char * buff; // Buffer to contain file data, dynamically allocated
 
-	// Open file [file_path] for reading
-	if(! file_read_open())
+	// Open file [view_path] for reading
+	if(! file_read_open(file_path, &fd))
 		goto print_error;
 
 	// Read data from file
-	if(! file_read_data())
+	if(! file_read_data(&buff, file_path, fd))
 		goto print_error;
 
-	// Parse and interpret file
-	parse_view();
+	// Parse and interpret view
+	parse_view(&buff, file_path);
 
 	// Print errors if any
 	print_error:
