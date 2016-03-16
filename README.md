@@ -21,3 +21,5 @@ Web applications written in C must somehow be executed by the Web server since C
 ## Setup
 
 For a proper guide on how to install and configure CHL on your system, read the following document: https://github.com/it4e/CHL/blob/master/SETUP.md
+
+As of now CHL is only officially available on Linux, but I am planning to port it to other operating systems as well if the interest is big enough. Otherwise you could of course make a port of it yourself.
