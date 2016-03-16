@@ -143,3 +143,65 @@ char chl_func(char * name, char * args) {
 	// Did not find a match
 	return 0;
 }
+
+// Returns next argument in [args]
+char * chl_next_arg(char * args) {
+	static char * pt; // Pointer to current byte in [args]
+	char * arg; // Pointer to next arg in [args]
+	char delim; // String delimiter
+
+	// If args attain a new value
+	if(args != NULL)
+		pt = args;
+
+	// Loop until start of argument delimiter is found (" | ')
+	while(((*pt != '"') && (*pt != '\'')) && (*pt != '\0'))
+		pt++;
+
+	// Set delimiter
+	delim = *pt;
+
+	// Found end of arguments
+	if(*pt == '\0')
+		return 0;
+
+	// Set start of argument
+	arg = ++pt;
+
+	// Loop until end of argument delimiter is found
+	while((*pt != delim) && (*pt != '\0'))
+		pt++;
+
+	// No ending delimiter
+	if(*pt == '\0')
+		return 0;
+
+	// Set end of argument
+	*(pt++) = '\0';
+
+	return arg;
+}
+
+// Allocates memory for [dst] and sets arguments
+char chl_get_args(char *(** dst), char * args) {
+	char argsn = 0; // Number of arguments
+	char * arg; // Pointer to argument
+
+	// If no arguments
+	if(! (arg = chl_next_arg(args)))
+		return 0;
+
+	// Allocate memory for argument pointer
+	*dst = malloc(++argsn * sizeof(char *));
+	**dst = arg;
+
+	// While there are still arguments left
+	while((arg = chl_next_arg(NULL))) {
+		// Allocate memory for argument pointer
+		*dst = realloc(*dst, ++argsn * sizeof(char *));
+		*(*dst + (argsn - 1)) = arg;
+	}
+
+	// Return number of arguments
+	return argsn;
+}

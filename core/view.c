@@ -137,3 +137,25 @@ void parse_view() {
 	fputs(output, stdout);
 }
 
+// Import file [file_path] contents
+void chl_import(char * file_path) {
+	path = file_path;
+
+	// Open file [file_path] for reading
+	if(! file_read_open())
+		goto print_error;
+
+	// Read data from file
+	if(! file_read_data())
+		goto print_error;
+
+	// Parse and interpret file
+	parse_view();
+
+	// Print errors if any
+	print_error:
+		chl_print_errors();
+
+	fclose(fd);
+}
+

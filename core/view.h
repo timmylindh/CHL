@@ -9,5 +9,6 @@ void chl_view(char *);
 char file_read_open();
 char file_read_data();
 void parse_view();
+void chl_import(char *);
 
 #endif /* VIEW_H_ */
