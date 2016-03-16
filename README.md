@@ -20,45 +20,4 @@ Web applications written in C must somehow be executed by the Web server since C
 
 ## Setup
 
-For a proper guide on how to install and configure CHL on your system, read the following: (link).
-
-## Enable CGI
-
-First you will want to enable CGI scripts in the Apache2 configuration file (*/etc/apache2/apache2.conf*).
-
-
-```bash
-vim /etc/apache2/apache2.conf
-```
-Look for a line that says: *"\<Directory /var/www/>"*. Add the following inside of it:
-
-```bash
-Options +ExecCGI
-AddHandler cgi-script .chl
-```
-
-This tells Apache to handle all files with the *.chl* ending as CGI scripts.
-
-
-Now you will have to enable the CGI module as well.
-
-```bash
-a2enmod cgi
-```
-
-Restart Apache and you are good to go.
-
-```bash
-service apache2 restart
-```
-
-## Contribute
-
-Comming soon....
-
-
-
-
-
-
-
+For a proper guide on how to install and configure CHL on your system, read the following document: https://github.com/it4e/CHL/blob/master/SETUP.md
