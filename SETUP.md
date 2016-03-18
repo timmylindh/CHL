@@ -70,7 +70,7 @@ Unzip it and you are good to go.
 
 ### <a name="apacheinstall">3. Installation</a>
 
-Once you have [downloaded](#download) the CHL source files you are ready to install CHL.
+Once you have [downloaded](#apachedownload) the CHL source files you are ready to install CHL.
 Go ahead and change to the CHL directory containing all of the source files you just downloaded using a Terminal.
 
 ```bash
@@ -83,7 +83,7 @@ Issue the following command to finish the installation process. (Make sure to ru
 sudo make install
 ```
 
-This will compile all the files inside *'core/*'* to their corresponding object files. The object files will then be smashed into a statically linked library (*'libchl.a'*), which is then copied into '*/usr/lib/chl/.*'. The standard CHL header *'chl.h'* is also moved, to '*/usr/include/.*'
+This will compile all the files inside *'core/*'* to their corresponding object files. The object files will then be smashed into a statically linked library (*'libchl.a'*), which is then copied into '*/usr/lib/chl/.*'. The standard CHL header *'chl.h'* is also moved, to '*/usr/include/chl/.*'
 
 ### <a name="apacheconfig">(4.) Configuartion</a>
 
