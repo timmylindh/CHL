@@ -115,4 +115,4 @@ Restart Apache2 to enable changes
 service apache2 restart
 ```
 
-Now that you have successfully installed CHL on your system, learn how to use CHL here: (link soon)
+Now that you have successfully installed CHL on your system, learn how to use CHL here: https://github.com/it4e/CHL/blob/master/TUTORIAL.md
