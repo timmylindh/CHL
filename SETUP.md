@@ -1,6 +1,6 @@
 # Setup
 
-This is a detailed post on how to install and configure CHL on your system. As of now *CHL* is only officially available on Linux, but I am planning to port it to other operating systems as well if the interest is big enough. Otherwise you could of course make a port of it yourself.
+This is a detailed post on how to install and configure CHL on your system. As of now *CHL* is only officially available on Linux, but I am planning to port it to other operating systems as well if the interest is big enough. Otherwise you could of course make a port of it yourself, see [contribute]().
 
 ## Contents
 > #### [Linux](#linux)
