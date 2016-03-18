@@ -19,7 +19,7 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
 
 ### <a name="whatcanchldo">What can CHL do?</a>
 
-Just like any other programming language designed for developing web applications, *CHL (although a library)* provides you with the same features. *CHL* enables you to easily parse and fetch *HTTP data*, such as *POST and GET*. CHL gives you all the functionality you need to *create your own headers*, including a dedicated API for creating and deleting *cookies*. *CHL* alos comes shipped with a very special, *handcrafted parser and interpreter* to give you the ability to *execute CHL functions* within HTML files, using a very straight-forward syntax. These are only a small number of things that CHL can do for you.
+Just like any other programming language designed for developing web applications, *CHL (although a library)* provides you with the same features. *CHL* enables you to easily parse and fetch *HTTP data*, such as *POST and GET*. CHL gives you all the functionality you need to *create your own headers*, including a dedicated API for creating and deleting *cookies*. *CHL* also comes shipped with a very special, *handcrafted parser and interpreter* to give you the ability to *execute CHL functions* within HTML files, using a very straight-forward syntax. These are only a small number of things that CHL can do for you.
 
 As *CHL is open-source*, people are able to contribute with their own APIs, plugins and code which means that *CHL* is constantly upgraded and provided with new features. Do you have an idea for a new CHL function and want to contribute? See (added later).
 
