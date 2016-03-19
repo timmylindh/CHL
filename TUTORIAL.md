@@ -11,7 +11,7 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
   - [What can CHL do?](#whatcanchldo)
   - [How does CHL work?](#howdoeschlwork)
 
-> #### [Structure](#structure)
+> #### [Structure](#structuremain)
   - [Three types of files](#structurefiles)
   - [Examples](#structureexamples)
 
@@ -33,7 +33,7 @@ Web applications written in C must somehow be executed by the Web server, since 
 
 Curious huh? Feel free to take a look through the [source code](https://github.com/it4e/CHL/tree/master/core), or maybe even [contribute]() yourself? *(although I strongly recommend you read this tutorial first).*
 
-## <a name="structure">Structure</a>
+## <a name="structuremain">Structure</a>
 
 ### <a name="structurefiles">Three types of files</a>
 
