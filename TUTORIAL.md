@@ -22,6 +22,7 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
 
 > #### [Hello World](#helloworld)
   - [A Step in the right direction](#astepintherightdirection)
+  - [main.c: Controller File](#helloworldfile)
 
 ## <a name="intro">Introduction</a>
 
@@ -150,3 +151,46 @@ gcc main.c funcs.c -lchl -L/usr/lib/chl -o index.chl
 A good starting program has been the well known *”Hello world”*-program for a very good while now. In this tutorial we will follow the same praxis and write our own version of  the *”Hello world”* program. This program will be very simple and you will not see anything to fancy, *but do not distrust*, writing a ”Hello world” program is a very good step in the right direction.
 
 This program will have a very basic structure for simplicity and to give you a deeper understanding of the *underlying implementation of CHL*. The program will consist of a standard [*CHL Controller file*](#controllerfile), which will output the standard *HTTP headers* and the text line *'Hello world!'*.
+
+### Code
+
+> #### <a name="helloworldfile">main.c (CHL Controller file)</a>
+
+```c
+#include <chl/chl.h>
+#include <stdio.h>
+
+int main() {
+  /* Set and print default HTTP headers */
+  chl_set_default_headers();
+  chl_print_headers();
+  
+  // Output "Hello world!"
+  printf("Hello world!");
+}
+```
+
+As you can see the *CHL functions* are very self-descriptive. First of all we include the *standard CHL header* [chl/chl.h](https://github.com/it4e/CHL/blob/master/chl.h), which contains all of the functions available in the *CHL API*.
+
+(Note that you can click on the function names)
+
+> [*chl_set_default_headers()*](): defines the default HTTP headers to make the website work (content-type e.t.c).
+> [*chl_print_headers()*](): prints out the default HTTP headers (and the ones you have set yourself).
+
+**printf()**: I am sure you know what this line does since it is a *standard C function*, but the thing to *note* here however is that *every output* to your web application should be made to *standard output* (stdout), just as in any other C program.
+
+
+
+Save the file as *'main.c'*, and [compile](#compileandlink) with the following command:
+
+```bash
+gcc main.c -lchl -L/usr/lib/chl -o index.chl
+```
+
+Make sure the compiled file *'index.chl'* is in your web server directory. Type *localhost/index.chl* in a browser window to open the application.
+
+*In your browser window*
+```html
+Hello World!
+```
+
