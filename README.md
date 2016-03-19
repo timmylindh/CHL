@@ -23,21 +23,21 @@ Web applications written in C must somehow be executed by the Web server since C
 
 ## API
 
-The *Application Programming Interface* is written in *Github Wikis*: [API](https://github.com/it4e/CHL/wiki).
+The *Application Programming Interface* is written with *Github Wikis*: [API](https://github.com/it4e/CHL/wiki).
 
-## Setup ([link](https://github.com/it4e/CHL/blob/master/SETUP.md))
+## Setup ([link](https://github.com/it4e/CHL/wiki/Setup))
 
-For a proper guide on how to install and configure CHL on your system, read the following document: https://github.com/it4e/CHL/blob/master/SETUP.md
+For a proper guide on how to install and configure CHL on your system, read the following document: https://github.com/it4e/CHL/wiki/Setup.
 
-As of now, CHL is only officially available on Linux, but I am planning to port it to other operating systems as well if the interest is big enough. Otherwise you could of course make a port of it yourself, see [contribute](#contribute).
+As of now, CHL is only officially available on Linux, but I am planning to port it to other operating systems as well if the interest is big enough. Otherwise you could of course make a port of it yourself, see [contribute](https://github.com/it4e/CHL/wiki/Contribute).
 
-## Tutorial ([link](https://github.com/it4e/CHL/blob/master/TUTORIAL.md))
+## Tutorial ([link](https://github.com/it4e/CHL/wiki/Tutorial))
 
-To read an in depth tutorial on the structure of *CHL web applications*, and a walk through on how to get started and how to use the *CHL API* properly see https://github.com/it4e/CHL/blob/master/TUTORIAL.md.
+To read an in depth tutorial on the structure of *CHL web applications*, and a walk through on how to get started and how to use the *CHL API* properly see https://github.com/it4e/CHL/wiki/Tutorial.
 
 The tutorial is divided into various sections. The first section is a quick introduction to let you know what *CHL* is all about and what it can do for you. We will then dig deeper and deeper into the CHL API.
 
-Before you start reading this tutorial, make sure you have CHL installed and that everything is properly set up. [Setting up CHL](https://github.com/it4e/CHL/blob/master/SETUP.md).
+Before you start reading this tutorial, make sure you have CHL installed and that everything is properly set up. [Setting up CHL](https://github.com/it4e/CHL/wiki/Setup).
 
 
 ## <a name="contribute">Contribute</a>
