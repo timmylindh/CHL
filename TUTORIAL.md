@@ -13,7 +13,15 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
 
 > #### [Structure](#structuremain)
   - [Three types of files](#structurefiles)
+    - [CHL Controller file](#controllerfile)
+    - [CHL View file](#viewfile)
+    - [CHL View Component file](#viewcomponentfile)
   - [Examples](#structureexamples)
+
+> #### [Compiling and linking](#compileandlink)
+
+> #### [Hello World](#helloworld)
+  - [A Step in the right direction](#astepintherightdirection)
 
 ## <a name="intro">Introduction</a>
 
@@ -41,11 +49,11 @@ CHL web applications are built up of *three different types of "files"*. These f
 
 The three types of files are:
 
-- *CHL controller file (.chl extension):* every page of your web application should consist of exactly one CHL controller file. This file is the final executable when you have successfully compiled all of your source files containing the CHL code of the program. This is the file which is requested by the clients. Of course there is nothing that says you can not split your code into multiple files, but the final executable of all the source files will always be the controller. 
+- <a name="controllerfile">*CHL controller file (.chl extension):*</a> every page of your web application should consist of exactly one CHL controller file. This file is the final executable when you have successfully compiled all of your source files containing the CHL code of the program. This is the file which is requested by the clients. Of course there is nothing that says you can not split your code into multiple files, but the final executable of all the source files will always be the controller. 
 
-- *CHL view file (recommended extension: .vw, although not required):* every page of your web application should mostly consist of *at least* 1 view file. The view files are nothing more than simple HTML files really, with the "small" difference being that they may contain inline CHL code that can be executed by the controller. The view file works as the main HTML document for the web page and a controller may only include one view file at a time.
+- <a name="viewfile">*CHL view file (recommended extension: .vw, although not required):*</a> every page of your web application should mostly consist of *at least* 1 view file. The view files are nothing more than simple HTML files really, with the "small" difference being that they may contain inline CHL code that can be executed by the controller. The view file works as the main HTML document for the web page and a controller may only include one view file at a time.
 
-- *CHL view component file (recommended extension: .vc, again not required):* every page of your web application may consist of a variable number of view component files. These files work as a complement to the main view file, and are often included inside the view files themselves. For instance, if you decide you want a fixed header on every page of your application you may put the header HTML code inside a view component file and then include that file in all of the view files.
+- <a name="viewcomponentfile">*CHL view component file (recommended extension: .vc, again not required):*</a> every page of your web application may consist of a variable number of view component files. These files work as a complement to the main view file, and are often included inside the view files themselves. For instance, if you decide you want a fixed header on every page of your application you may put the header HTML code inside a view component file and then include that file in all of the view files.
 
 ### <a name="structureexamples">Examples</a>
 
@@ -117,3 +125,28 @@ Compiling and executing *'main.chl'*, unsurprisingly yields:
 As you see the line *'<{ import("component.vc"); }>'* was replaced with *'\<p>Hello world!\</p>'*, the contents of *'component.vc'*.
 
 This should have hopefully given you a clear image of how CHL web applications are structured and made, but if you somehow feel like you did not understand everything there really are no worries. You will grasp this better as we get to the coding.
+
+## <a name="compileandlink">Compiling and linking</a>
+
+Compiling a *CHL program* does not differ from compiling for any other library in C. *CHL* uses the statically linked library *'libchl.a'*, which can be found in *'/usr/lib/chl/libchl.a'*, and should be linked with the compiler everytime you compile and link a source file.
+
+When compiling and linking with *gcc* we will make use of the *-l* and *-L* flags to ensure that *gcc* knows of our library and location. Use the following command to compile your CHL source files:
+
+```bash
+gcc source_files -lchl -L/usr/lib/chl
+```
+
+For instance, if you want to compile the files *main.c* and *funcs.c* to the CHL controller file *'index.chl'*:
+```bash
+gcc main.c funcs.c -lchl -L/usr/lib/chl -o index.chl
+```
+
+## <a name="helloworld">Hello World</a>
+
+![alt tag](http://s24.postimg.org/66nwestrp/hello_world_web.png)
+
+### <a name="astepintherightdirection">A Step in the right direction</a>
+
+A good starting program has been the well known *”Hello world”*-program for a very good while now. In this tutorial we will follow the same praxis and write our own version of  the *”Hello world”* program. This program will be very simple and you will not see anything to fancy, *but do not distrust*, writing a ”Hello world” program is a very good step in the right direction.
+
+This program will have a very basic structure for simplicity and to give you a deeper understanding of the *underlying implementation of CHL*. The program will consist of a standard [*CHL Controller file*](#controllerfile), which will output the standard *HTTP headers* and the text line *'Hello world!'*.
