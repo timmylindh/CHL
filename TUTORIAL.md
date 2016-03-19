@@ -11,6 +11,10 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
   - [What can CHL do?](#whatcanchldo)
   - [How does CHL work?](#howdoeschlwork)
 
+> #### [Structure](#structure)
+  - [Three types of files](#structurefiles)
+  - [Examples](#structureexamples)
+
 ## <a name="intro">Introduction</a>
 
 ### <a name="whatischl">What is CHL?</a>
@@ -29,3 +33,87 @@ Web applications written in C must somehow be executed by the Web server, since 
 
 Curious huh? Feel free to take a look through the [source code](https://github.com/it4e/CHL/tree/master/core), or maybe even [contribute]() yourself? *(although I strongly recommend you read this tutorial first).*
 
+## <a name="structure">Structure</a>
+
+### <a name="structurefiles">Three types of files</a>
+
+CHL web applications are built up of *three different types of "files"*. These files are put together and cooperate in a very straight-forward, non-complicated way, to form the end application.
+
+The three types of files are:
+
+- *CHL controller file (.chl extension):* every page of your web application should consist of exactly one CHL controller file. This file is the final executable when you have successfully compiled all of your source files containing the CHL code of the program. This is the file which is requested by the clients. Of course there is nothing that says you can not split your code into multiple files, but the final executable of all the source files will always be the controller. 
+
+- *CHL view file (recommended extension: .vw, although not required):* every page of your web application should mostly consist of *at least* 1 view file. The view files are nothing more than simple HTML files really, with the "small" difference being that they may contain inline CHL code that can be executed by the controller. The view file works as the main HTML document for the web page and a controller may only include one view file at a time.
+
+- *CHL view component file (recommended extension: .vc, again not required):* every page of your web application may consist of a variable number of view component files. These files work as a complement to the main view file, and are often included inside the view files themselves. For instance, if you decide you want a fixed header on every page of your application you may put the header HTML code inside a view component file and then include that file in all of the view files.
+
+### <a name="structureexamples">Examples</a>
+
+A typical CHL web application may look something like this.
+
+> *Controller file: 'main.c' (compiled to 'main.chl')*
+
+```c
+#include <chl/chl.h>
+
+// Function to import component view file, called by view
+void import(char * args) {
+  // Get argument passed to function called by view
+  char * name = chl_next_arg(args);
+  
+  // Import file: put the contents of [name] in view
+  chl_import(name);
+}
+
+int main() {
+  // Make funtion import available to view
+  chl_func_append("import", import);
+  
+  // Open view 'view.vw'
+  chl_view("view.vw");
+}
+```
+
+
+
+> *View file: 'view.vw' (called by controller 'main.c')*
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <!-- Call function import, defined in controller -->
+    <!-- Put contents of component.vc here -->
+    <{ import("component.vc"); }>
+  </body>
+</html>
+```
+
+
+
+> *View component file: 'component.vc' (called by view 'view.vw')*
+
+```html
+<p>Hello world!</p>
+```
+
+Compiling and executing *'main.chl'*, unsurprisingly yields:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <!-- Call function import, defined in controller -->
+    <!-- Put contents of component.vc here -->
+    <p>Hello world!</p>
+  </body>
+</html>
+```
+
+As you see the line *'<{ import("component.vc"); }>'* was replaced with *'\<p>Hello world!\</p>'*, the contents of *'component.vc'*.
+
+This should have hopefully given you a clear image of how CHL web applications are structured and made, but if you somehow feel like you did not understand everything there really are no worries. You will grasp this better as we get to the coding.
