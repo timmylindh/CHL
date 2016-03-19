@@ -21,6 +21,10 @@ and a lot more...
 
 Web applications written in C must somehow be executed by the Web server since C is a compiled langauge. To make this possible CHL is based on CGI (Common Gateway Interface), which in short means that the server executes your program and passes it data through environment variables. CHL does all the parsing and handling of CGI in the background, and provides you with some easy to use functions instead.
 
+## API
+
+The *Application Programming Interface* is written in *Github Wikis*: [API](https://github.com/it4e/CHL/wiki).
+
 ## Setup ([link](https://github.com/it4e/CHL/blob/master/SETUP.md))
 
 For a proper guide on how to install and configure CHL on your system, read the following document: https://github.com/it4e/CHL/blob/master/SETUP.md
