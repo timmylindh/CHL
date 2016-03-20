@@ -41,3 +41,7 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
 
 
 ## <a name="contribute">Contribute</a>
+
+There are several ways you can contribute to CHL. Take a look at the [*issues page*](https://github.com/it4e/CHL/issues) for an overview of what you can contribute to. If you have any ideas of your own for new features to implement, feel free to contribute with a pull request.
+
+For a detailed guide on contribution to CHL, see [contribute](https://github.com/it4e/CHL/wiki/Contribute).
