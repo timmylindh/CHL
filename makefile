@@ -38,3 +38,4 @@ lib:
 clean:
 	rm *.o
 
+DESTROY!!
