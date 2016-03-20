@@ -1,38 +1,52 @@
 # Which compiler to use
 COMPILER = gcc
 
+# Path to core
+PATH_CORE = core
+
+# Path to plugins
+PATH_PLUGINS = plugins
+
+# Path to plugins src
+PATH_PLUGINS_SRC = $(PATH_PLUGINS)/*/src/*.c
+
+# Path to plugins libs
+PATH_PLUGINS_LIBS = $(PATH_PLUGINS)/*/libs/*
+
 # Path to core source files
-CORE_SRC_PATH = core/src
+PATH_SRC_CORE = $(PATH_CORE)/src
 
-# Main path
-MAINPATH = chl
+# Name of CHL library
+NAME_MAIN_LIB = libchl
 
-# Path to where to put libraries
-LIBPATH = /usr/lib/$(MAINPATH)
+# Name of CHL directories
+NAME_CHL_DIR = chl
 
-# Path to where to put header files
-HEADERPATH = /usr/include/$(MAINPATH)
+# Path to default location for libraries and headers
+LIBSPATH = /usr/lib/$(NAME_CHL_DIR)
+HEADERSPATH = /usr/include/$(NAME_CHL_DIR)
 
-# Core library name
-CORE_LIB_NAME = libchl
+# Default, compile to object files
+all: compile
 
-# Core header path
-CORE_HEADER_PATH = core/chl
-
-all: lib
-
-# Move lib and header files to proper location
+# Move lib and header files to proper locations
 install: lib
-	if ! [ -d "$(LIBPATH)" ]; then mkdir $(LIBPATH); fi
-	if ! [ -d "$(HEADERPATH)" ]; then mkdir $(HEADERPATH); fi
-	cp $(CORE_LIB_NAME).a $(LIBPATH)/
-	cp $(CORE_HEADER_PATH).h $(HEADERPATH)/
+	if ! [ -d "$(LIBSPATH)" ]; then mkdir $(LIBSPATH); fi
+	if ! [ -d "$(HEADERSPATH)" ]; then mkdir $(HEADERSPATH); fi
+	cp $(NAME_MAIN_LIB).a $(LIBSPATH)/
+	cp $(wildcard $(PATH_PLUGINS_LIBS)) $(LIBSPATH)/ 2>/dev/null || :
+	cp $(PATH_CORE)/*.h $(HEADERSPATH)/
+	cp $(wildcard $(PATH_PLUGINS)/*/*.h) $(HEADERSPATH)/ 2>/dev/null || :
+	rm $(NAME_MAIN_LIB).a
 
 # Create static library
-lib:
-	$(COMPILER) -c $(CORE_SRC_PATH)/*.c
-	ar rcs $(CORE_LIB_NAME).a *.o
+lib: compile	
+	ar rcs $(NAME_MAIN_LIB).a *.o
 	make clean
+
+# Compile source files to object files
+compile:
+	$(COMPILER) -c $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC))	
 
 # Clean up
 clean:
