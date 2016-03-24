@@ -1,21 +1,32 @@
 # CHL
 C Hypertext Library - A library for writing web applications in C
 
-![alt tag](http://s18.postimg.org/u9idmicax/hello_world_chl.png)
+![alt tag](http://s7.postimg.org/n8kgxv53v/chl_helloworld.png)
 
  (*Simple Hello World in CHL*)
 
 ## What is CHL?
 
-CHL, short for *C Hypertext Library*, is a library written in C to be used to write web applications of all sorts. CHL provides you with a lot of useful features:
+CHL, short for *C Hypertext Library*, is a library used to write web applications of all sorts in the C programming language. CHL provides you with a lot of useful features:
 
 > - *Parsing and fetching HTTP data, such as POST and GET.*
 - *Creating and deleting HTTP headers.*
 - *A dedicated API for creating and deleting cookies.*
 - *The ability to execute CHL functions within HTML files*
 
-
 and a lot more...
+
+## Why CHL?
+
+What makes CHL uniqe is the support for executing functions inside HTML files, much like PHP using the *<?php ?>* syntax, though *CHL* uses the *<{ }>* syntax.
+
+> Example
+
+```html
+<body>
+ <{ import("header.vw"); }>
+</body>
+```
 
 ## How does it work?
 
@@ -25,13 +36,13 @@ Web applications written in C must somehow be executed by the Web server since C
 
 The *Application Programming Interface* is written with *Github Wikis*: [API](https://github.com/it4e/CHL/wiki).
 
-## Setup ([link](https://github.com/it4e/CHL/wiki/Setup))
+## Setup
 
 For a proper guide on how to install and configure CHL on your system, read the following document: https://github.com/it4e/CHL/wiki/Setup.
 
 As of now, CHL is only officially available on Linux, but I am planning to port it to other operating systems as well if the interest is big enough. Otherwise you could of course make a port of it yourself, see [contribute](https://github.com/it4e/CHL/wiki/Contribute).
 
-## Tutorial ([link](https://github.com/it4e/CHL/wiki/Tutorial))
+## Tutorial
 
 To read an in depth tutorial on the structure of *CHL web applications*, and a walk through on how to get started and how to use the *CHL API* properly see https://github.com/it4e/CHL/wiki/Tutorial.
 
