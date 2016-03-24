@@ -14,8 +14,19 @@ CHL, short for *C Hypertext Library*, is a library used to write web application
 - *A dedicated API for creating and deleting cookies.*
 - *The ability to execute CHL functions within HTML files*
 
-
 and a lot more...
+
+## Why CHL?
+
+What makes CHL uniqe is the support for executing functions inside HTML files, much like PHP using the *<?php ?>* syntax, though *CHL* uses the *<{ }>* syntax.
+
+> Example
+
+```html
+<body>
+ <{ import("header.vw"); }>
+</body>
+```
 
 ## How does it work?
 
