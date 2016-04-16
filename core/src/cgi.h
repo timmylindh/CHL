@@ -11,7 +11,11 @@ void format_data(char *, const char);
 void http_form_decode(char *);
 void method_append_var(char *, char *, const char);
 char * chl_post(char *);
+int chl_posti(char *);
+float chl_postf(char *);
 char * chl_get(char *);
+int chl_geti(char *);
+float chl_getf(char *);
 void method_post_read_input();
 
 #endif /* CGI_H_ */

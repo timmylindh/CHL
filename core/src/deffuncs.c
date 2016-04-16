@@ -15,9 +15,26 @@ void _def_import(char * args) {
 		chl_import(args);
 }
 
+// Default inline print function
+void _def_print(char * args) {
+	char * arg;
+
+	// Attain first argument
+	if(! (arg = chl_next_arg(args)))
+		return;
+
+	// Output first argument
+	fputs(arg, stdout);
+
+	// Loop through rest of arguments and output data
+	while((arg = chl_next_arg(NULL)))
+		fputs(arg, stdout);
+}
+
 // Append default functions to [FUNCS] array in "inline.c"
 void append_default_funcs() {
 	// Add default inline import function
 	chl_func_append(DEF_FUNC_IMPORT, _def_import);
-
+	// Add default inline print function
+	chl_func_append(DEF_FUNC_PRINT, _def_print);
 }

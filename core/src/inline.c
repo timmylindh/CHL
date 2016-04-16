@@ -182,7 +182,39 @@ char * chl_next_arg(char * args) {
 	return arg;
 }
 
-// Allocates memory for [dst] and sets arguments
+// Fetches next argument in [args] and converts it to integer, returns -1 on error or 0 if end argument
+int chl_next_argi(char * args) {
+	char * arg;
+	int val;
+
+	// Check if last argument
+	if(! (arg = chl_next_arg(args)))
+		return 0;
+
+	// Convert to integer, return -1 if conversion could not be done
+	if(! (val = (int) strtol(arg, NULL, 10)))
+		return -1;
+
+	return val;
+}
+
+// Fetches next argument in [args] and converts it to float, returns -1 on error or 0 if end argument
+float chl_next_argf(char * args) {
+	char * arg;
+	float val;
+
+	// Check if last argument
+	if(! (arg = chl_next_arg(args)))
+		return 0;
+
+	// Convert to float, return -1 if conversion could not be done
+	if(! (val = strtof(arg, NULL)))
+		return -1;
+
+	return val;
+}
+
+// Allocates memory for [dst] and sets arguments, return number of arguments
 char chl_get_args(char *(** dst), char * args) {
 	char argsn = 0; // Number of arguments
 	char * arg; // Pointer to argument

@@ -35,6 +35,22 @@ extern char * _alloce_;
 char * chl_post(char * name);
 
 /*
+ * Function for acquiring HTTP POST data as integer value.
+ * [name]: a string containing the name of the POST variable
+ *
+ * Return: 0 if not defined, -1 if conversion to int failed, or POST variable value
+ */
+int chl_posti(char * name);
+
+/*
+ * Function for acquiring HTTP POST data as float value.
+ * [name]: a string containing the name of the POST variable
+ *
+ * Return: 0 if not defined, -1 if conversion to float failed, or POST variable value
+ */
+float chl_postf(char * name);
+
+/*
  * Function for acquiring GET data.
  * [name]: a string containing the name of the GET variable
  *
@@ -42,8 +58,21 @@ char * chl_post(char * name);
  */
 char * chl_get(char * name);
 
+/*
+ * Function for acquiring GET data as integer value.
+ * [name]: a string containing the name of the GET variable
+ *
+ * Return: 0 if not defined, -1 if conversion to int failed, or GET variable value
+ */
+int chl_geti(char * name);
 
-
+/*
+ * Function for acquiring GET data as float value.
+ * [name]: a string containing the name of the GET variable
+ *
+ * Return: 0 if not defined, -1 if conversion to float failed, or GET variable value
+ */
+float chl_getf(char * name);
 
 //<http.c>
 
@@ -135,6 +164,22 @@ char chl_func(char * name, char * args);
  * Return: 0 if no arguments left, or argument data
  */
 char * chl_next_arg(char * args);
+
+/*
+ * Function for acquiring next argument of function as integer value
+ * [args]: the char pointer argument to CHL function
+ *
+ * Return: 0 if no arguments left, -1 if conversion to int failed, or argument data
+ */
+int chl_next_argi(char * args);
+
+/*
+ * Function for acquiring next argument of function as float value
+ * [args]: the char pointer argument to CHL function
+ *
+ * Return: 0 if no arguments left, -1 if conversion to float failed, or argument data
+ */
+float chl_next_argf(char * args);
 
 /*
  * Function for acquiring all arguments of a function
