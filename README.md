@@ -5,7 +5,11 @@ C Hypertext Library - A library for writing web applications in C
 
  (*Simple Hello World in CHL*)
 
-[See examples](https://github.com/it4e/CHL/wiki/Examples)
+[See examples](https://github.com/it4e/CHL/wiki/Examples)<br />
+[Tutorial](https://github.com/it4e/CHL/wiki/Tutorial), 
+[Setup](https://github.com/it4e/CHL/wiki/Setup), 
+[API](https://github.com/it4e/CHL/wiki), 
+[Contribute](https://github.com/it4e/CHL/wiki/Contribute)
 
 ## What is CHL?
 
@@ -58,3 +62,7 @@ Before you start reading this tutorial, make sure you have CHL installed and tha
 There are several ways you can contribute to CHL. Take a look at the [*issues page*](https://github.com/it4e/CHL/issues) for an overview of what you can contribute to. If you have any ideas of your own for new features to implement, feel free to contribute with a pull request.
 
 For a detailed guide on contribution to CHL, see [contribute](https://github.com/it4e/CHL/wiki/Contribute).
+
+## <a name="examples">Examples</a>
+
+See [examples](https://github.com/it4e/CHL/wiki/Examples), for a page with detailed examples of CHL in use.
