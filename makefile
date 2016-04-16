@@ -33,20 +33,21 @@ all: compile
 install: lib
 	if ! [ -d "$(LIBSPATH)" ]; then mkdir $(LIBSPATH); fi
 	if ! [ -d "$(HEADERSPATH)" ]; then mkdir $(HEADERSPATH); fi
-	cp $(NAME_MAIN_LIB).a $(LIBSPATH)/
+	cp $(NAME_MAIN_LIB).$(EXTENSION) $(LIBSPATH)/
 	cp $(wildcard $(PATH_PLUGINS_LIBS)) $(LIBSPATH)/ 2>/dev/null || :
 	cp $(PATH_CORE)/*.h $(HEADERSPATH)/
 	cp $(wildcard $(PATH_PLUGINS)/*/*.h) $(HEADERSPATH)/ 2>/dev/null || :
-	rm $(NAME_MAIN_LIB).a
+	rm $(NAME_MAIN_LIB).$(EXTENSION)
 
 # Create static library
 lib: compile	
-	ar rcs $(NAME_MAIN_LIB).a *.o
+	gcc -shared -o $(NAME_MAIN_LIB).so *.o
 	make clean
 
-# Compile source files to object files
+# Compile source files to position independent object files
 compile:
-	$(COMPILER) -c $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC))	
+	$(COMPILER) -c -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC))	
+	$(eval EXTENSION = so)
 
 # Clean up
 clean:
