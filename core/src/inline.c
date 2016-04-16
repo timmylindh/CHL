@@ -8,6 +8,7 @@
 #include <string.h>
 #include "inline.h"
 #include "error.h"
+#include "deffuncs.h"
 
 // Struct for CHL inline functions
 typedef struct {
@@ -35,9 +36,8 @@ char parse_inline(char ** buff, char * path, int * line_nr) {
 		}
 
 		// If space, skip
-		else if(isspace(**buff)) {
+		else if(isspace(**buff))
 			goto next_byte;
-		}
 
 		// First letter of inline terminator
 		else if(**buff == '}') {
@@ -124,9 +124,9 @@ void chl_func_append(char * name, void (* function)(char *)) {
 
 // Execute function [name], return 0 if not found
 char chl_func(char * name, char * args) {
-	// Skip if [FUNCS] is empty
+	// Append default functions if [FUNCS] is empty
 	if(! funcs_size)
-		return 0;
+		append_default_funcs();
 
 	int i, x;
 
@@ -144,7 +144,7 @@ char chl_func(char * name, char * args) {
 	return 0;
 }
 
-// Returns next argument in [args]
+// Returns next argument in [args], 0 if no arguments left
 char * chl_next_arg(char * args) {
 	static char * pt; // Pointer to current byte in [args]
 	char * arg; // Pointer to next arg in [args]
