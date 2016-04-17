@@ -293,7 +293,7 @@ int chl_geti(char * name) {
 	int ret;
 
 	// Check if GET index exists
-	if(! (val = chl_post(name)))
+	if(! (val = chl_get(name)))
 		return 0;
 
 	// Convert to int, return -1 if conversion could not be done
@@ -310,7 +310,7 @@ float chl_getf(char * name) {
 	float ret;
 
 	// Check if POST index exists
-	if(! (val = chl_post(name)))
+	if(! (val = chl_get(name)))
 		return 0;
 
 	// Convert to float, return -1 if conversion could not be done
