@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <limits.h>
+#include <math.h>
 #include "inline.h"
 #include "error.h"
 #include "deffuncs.h"
@@ -182,36 +184,44 @@ char * chl_next_arg(char * args) {
 	return arg;
 }
 
-// Fetches next argument in [args] and converts it to integer, returns -1 on error or 0 if end argument
+// Fetches next argument in [args] and converts it to integer, returns -1 on error or if end argument
 int chl_next_argi(char * args) {
-	char * arg;
-	int val;
+	char * arg, * err;
+	long int ret;
 
 	// Check if last argument
 	if(! (arg = chl_next_arg(args)))
-		return 0;
-
-	// Convert to integer, return -1 if conversion could not be done
-	if(! (val = (int) strtol(arg, NULL, 10)))
 		return -1;
 
-	return val;
+	// Convert to int
+	ret = strtol(arg, &err, 10);
+
+	// Return -1 if conversion could not be done, or an error occurred
+	if((arg == err) || (ret == LONG_MIN) || (ret == LONG_MAX))
+		return -1;
+
+	// Return integer
+	return (int) ret;
 }
 
 // Fetches next argument in [args] and converts it to float, returns -1 on error or 0 if end argument
 float chl_next_argf(char * args) {
-	char * arg;
-	float val;
+	char * arg, * err;
+	float ret;
 
 	// Check if last argument
 	if(! (arg = chl_next_arg(args)))
-		return 0;
-
-	// Convert to float, return -1 if conversion could not be done
-	if(! (val = strtof(arg, NULL)))
 		return -1;
 
-	return val;
+	// Convert to float
+	ret = strtof(arg, &err);
+
+	// Return -1 if conversion could not be done, or an error occurred
+	if((arg == err) || (ret == HUGE_VALF))
+		return -1;
+
+	// Return float
+	return ret;
 }
 
 // Allocates memory for [dst] and sets arguments, return number of arguments

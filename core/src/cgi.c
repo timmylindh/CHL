@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <limits.h>
+#include <math.h>
 #include "cgi.h"
 
 #define GET_DATA_ENV "QUERY_STRING" // GET data environment variable
@@ -236,35 +238,41 @@ char * chl_post(char * name) {
 
 // Returns variable [name]'s value in POST data array as integer
 int chl_posti(char * name) {
-	char * val;
-	int ret;
+	char * val, * err;
+	long int ret;
 
 	// Check if POST index exists
 	if(! (val = chl_post(name)))
-		return 0;
-
-	// Convert to int, return -1 if conversion could not be done
-	if(! (ret = (int) strtol(val, NULL, 10)))
 		return -1;
 
-	// Did not find a match
-	return ret;
+	// Convert to int
+	ret = strtol(val, &err, 10);
+
+	// Return -1 if conversion could not be done, or an error occurred
+	if((val == err) || (ret == LONG_MIN) || (ret == LONG_MAX))
+		return -1;
+
+	// Return integer
+	return (int) ret;
 }
 
 // Returns variable [name]'s value in POST data array as float
 float chl_postf(char * name) {
-	char * val;
+	char * val, * err;
 	float ret;
 
 	// Check if POST index exists
 	if(! (val = chl_post(name)))
-		return 0;
-
-	// Convert to float, return -1 if conversion could not be done
-	if(! (ret =  strtof(val, NULL)))
 		return -1;
 
-	// Did not find a match
+	// Convert to float
+	ret = strtof(val, &err);
+
+	// Return -1 if conversion could not be done, or an error occurred
+	if((val == err) || (ret == HUGE_VALF))
+		return -1;
+
+	// Return float
 	return ret;
 }
 
@@ -289,35 +297,41 @@ char * chl_get(char * name) {
 
 // Returns variable [name]'s value in GET data array as integer
 int chl_geti(char * name) {
-	char * val;
-	int ret;
+	char * val, * err;
+	long int ret;
 
 	// Check if GET index exists
 	if(! (val = chl_get(name)))
-		return 0;
-
-	// Convert to int, return -1 if conversion could not be done
-	if(! (ret = (int) strtol(val, NULL, 10)))
 		return -1;
 
-	// Did not find a match
-	return ret;
+	// Convert to int
+	ret = strtol(val, &err, 10);
+
+	// Return -1 if conversion could not be done, or an error occurred
+	if((val == err) || (ret == LONG_MIN) || (ret == LONG_MAX))
+		return -1;
+
+	// Return integer
+	return (int) ret;
 }
 
 // Returns variable [name]'s value in GET data array as float
 float chl_getf(char * name) {
-	char * val;
+	char * val, * err;
 	float ret;
 
 	// Check if POST index exists
 	if(! (val = chl_get(name)))
-		return 0;
-
-	// Convert to float, return -1 if conversion could not be done
-	if(! (ret =  strtof(val, NULL)))
 		return -1;
 
-	// Did not find a match
+	// Convert to float
+	ret = strtof(val, &err);
+
+	// Return -1 if conversion could not be done, or an error occurred
+	if((val == err) || (ret == HUGE_VALF))
+		return -1;
+
+	// Return float
 	return ret;
 }
 
