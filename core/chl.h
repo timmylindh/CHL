@@ -74,7 +74,7 @@ int chl_geti(char * name);
  */
 float chl_getf(char * name);
 
-//<http.c>
+// <http.c>
 
 /*
  * Function for defining HTTP headers
@@ -122,7 +122,7 @@ void chl_delete_cookie(char * name);
 
 
 
-// <view.h>
+// <view.c>
 
 /*
  * Function for opening a CHL view file
@@ -140,7 +140,7 @@ void chl_import(char * path);
 
 
 
-// <inline.h>
+// <inline.c>
 
 
 /*
@@ -186,5 +186,20 @@ float chl_next_argf(char * args);
  * [arguments]: the address of a char ** variable. Will contain all arguments. [args]: the char pointer argument to CHL function
  */
 char chl_get_args(char *(** arguments), char * args);
+
+// <fastcgi.c>
+
+/*
+ * Function for calling init methods of other source files to work with FastCGI
+ */
+void chl_fcgi_init();
+
+/*
+ * Function for accepting next client using FastCGI
+ * Should be called in a loop by caller
+ *
+ * Return: 1 if pending client, 0 if an error accoured
+ */
+int chl_fcgi_next();
 
 #endif /* CHL_H_ */
