@@ -9,7 +9,8 @@ C Hypertext Library - A library for writing web applications in C
 [Tutorial](https://github.com/it4e/CHL/wiki/Tutorial), 
 [Setup](https://github.com/it4e/CHL/wiki/Setup), 
 [API](https://github.com/it4e/CHL/wiki), 
-[Contribute](https://github.com/it4e/CHL/wiki/Contribute)
+[Contribute](https://github.com/it4e/CHL/wiki/Contribute)<br />
+[FastCGI](https://github.com/it4e/CHL/wiki/FastCGI)
 
 ## What is CHL?
 
