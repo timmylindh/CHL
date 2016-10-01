@@ -15,10 +15,11 @@ C Hypertext Library - A library for writing web applications in C
 
 CHL, short for *C Hypertext Library*, is a library used to write web applications of all sorts in the C programming language. CHL provides you with a lot of useful features:
 
-> - *Parsing and fetching HTTP data, such as POST and GET.*
-- *Creating and deleting HTTP headers.*
-- *A dedicated API for creating and deleting cookies.*
-- *The ability to execute CHL functions within HTML files*
+> - *FastCGI*
+ - *Parsing and fetching HTTP data, such as POST and GET.*
+ - *Creating and deleting HTTP headers.*
+ - *A dedicated API for creating and deleting cookies.*
+ - *The ability to execute CHL functions within HTML files*
 
 and a lot more...
 
@@ -36,7 +37,7 @@ What makes CHL uniqe is the support for executing functions inside HTML files, m
 
 ## How does it work?
 
-Web applications written in C must somehow be executed by the Web server since C is a compiled langauge. To make this possible CHL is based on CGI (Common Gateway Interface), which in short means that the server executes your program and passes it data through environment variables. CHL does all the parsing and handling of CGI in the background, and provides you with some easy to use functions instead.
+Web applications written in C must somehow be executed by the Web server since C is a compiled langauge. To make this possible CHL is based on CGI (Common Gateway Interface), which in short means that the server executes your program and passes it data through environment variables. CHL does all the parsing and handling of CGI in the background, and provides you with some easy to use functions instead. CHL also provides an interface for FastCGI.
 
 ## API
 
