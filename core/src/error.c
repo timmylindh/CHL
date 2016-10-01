@@ -45,3 +45,11 @@ void chl_print_errors() {
 
 	fflush(stdout);
 }
+
+// Initialize and free objects, called by chl_fcgi_init
+void _error_init() {
+	errors_size = 0;
+
+	free(ERRORS);
+	free(_alloce_);
+}

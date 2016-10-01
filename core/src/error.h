@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Whether to compile as FastCGI
+#ifdef _F_CHL_
+#include "fcgi_stdio.h"
+#endif
+
+
 #define CHL_E_FILENF 0 // Error: file not found
 #define CHL_E_FILEINT 1 // Error: opening of file interrupted by signal
 #define CHL_E_FILESIZE 2 // Error: file too large
@@ -14,6 +20,7 @@
 
 void error_append(char, char *);
 void chl_print_errors();
+void _error_init();
 
 // Dynamically allocated variable for error string
 extern char * _alloce_;

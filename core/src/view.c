@@ -37,6 +37,7 @@ void chl_view(char * view_path) {
 	print_error:
 		chl_print_errors();
 
+	free(buff);
 	fclose(fd);
 }
 
@@ -154,6 +155,7 @@ void chl_import(char * file_path) {
 	print_error:
 		chl_print_errors();
 
+	free(buff);
 	fclose(fd);
 }
 

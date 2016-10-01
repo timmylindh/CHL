@@ -4,6 +4,11 @@
 #define CGI_POST_LIM 100000 // CGI POST data limit
 #define CGI_GET_LIM 1000 // Not used, see environment variable limit
 
+// Whether to compile as FastCGI
+#ifdef _F_CHL_
+#include "fcgi_stdio.h"
+#endif
+
 char * get_env(char *);
 void method_post_init();
 void method_get_init();
@@ -17,5 +22,6 @@ char * chl_get(char *);
 int chl_geti(char *);
 float chl_getf(char *);
 void method_post_read_input();
+void _cgi_init();
 
 #endif /* CGI_H_ */

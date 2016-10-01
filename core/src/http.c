@@ -214,3 +214,20 @@ void chl_delete_cookie(char * name) {
 		printf("Set-Cookie: %s=; expires=Thu, 01 Jan 1970 00:00:00 GMT\n", name);
 
 }
+
+// Initialize and free objects, called by chl_fcgi_init
+void _http_init() {
+	headers_size = 0;
+	cookies_size = 0;
+	headers_used = 0;
+	cookies_used = 0;
+
+	free(HEADERS);
+	free(COOKIES);
+	free(raw_data_cookies);
+
+	HEADERS = NULL;
+	COOKIES = NULL;
+	raw_data_cookies = NULL;
+
+}

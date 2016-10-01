@@ -356,3 +356,18 @@ void method_post_read_input() {
 	raw_data_post[ntotal + nread] = '\0';
 }
 
+// Initialize and free objects, called by chl_fcgi_init
+void _cgi_init() {
+	post_size = 0;
+	get_size = 0;
+	post_used = 0;
+	get_used = 0;
+
+	free(POST);
+	free(GET);
+	free(raw_data_post);
+
+	POST = NULL;
+	GET = NULL;
+	raw_data_post = NULL;
+}
