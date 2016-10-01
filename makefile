@@ -33,22 +33,25 @@ all: compile
 install: lib
 	if ! [ -d "$(LIBSPATH)" ]; then mkdir $(LIBSPATH); fi
 	if ! [ -d "$(HEADERSPATH)" ]; then mkdir $(HEADERSPATH); fi
-	cp $(NAME_MAIN_LIB).$(EXTENSION) $(LIBSPATH)/
-	cp $(wildcard $(PATH_PLUGINS_LIBS)) $(LIBSPATH)/ 2>/dev/null || :
-	ln -f -s $(wildcard $(LIBSPATH)/*) /usr/lib/
+	mv $(NAME_MAIN_LIB).$(EXTENSION) $(LIBSPATH)/
+	cp $(wildcard $(PATH_PLUGINS_LIBS).so) $(LIBSPATH)/ 2>/dev/null || :
 	cp $(PATH_CORE)/*.h $(HEADERSPATH)/
 	cp $(wildcard $(PATH_PLUGINS)/*/*.h) $(HEADERSPATH)/ 2>/dev/null || :
-	rm $(NAME_MAIN_LIB).$(EXTENSION)
+	ln -f -s $(LIBSPATH)/* /usr/lib/
 
-# Create shared library
-lib: compile	
+# Create main and plugin shared libraries
+lib: compile
+	# Create main shared library	
 	gcc -shared -o $(NAME_MAIN_LIB).so *.o
 	make clean
+
+	# Create plugin libraries
+	bash createlibs $(PATH_PLUGINS)	
 
 # Compile source files to position independent object files
 compile:
 	# Check whether to compile for FastCGI or CGI 
-	if [ "${TYPE}" -ne "FCGI" ]; then $(COMPILER) -c -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC)); else $(COMPILER) -c -D '_F_CHL_' -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC)); fi	
+	if [ "${TYPE}" != "FCGI" ]; then $(COMPILER) -c -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC)); else $(COMPILER) -c -D '_F_CHL_' -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC)); fi	
 	$(eval EXTENSION = so)
 
 # Clean up
