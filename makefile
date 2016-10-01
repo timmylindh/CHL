@@ -40,7 +40,7 @@ install: lib
 	cp $(wildcard $(PATH_PLUGINS)/*/*.h) $(HEADERSPATH)/ 2>/dev/null || :
 	rm $(NAME_MAIN_LIB).$(EXTENSION)
 
-# Create static library
+# Create shared library
 lib: compile	
 	gcc -shared -o $(NAME_MAIN_LIB).so *.o
 	make clean
