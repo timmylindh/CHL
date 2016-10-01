@@ -19,7 +19,7 @@ typedef struct {
 } FUNC;
 
 // Struct array for CHL inline functions, dynamically allocated
-static FUNC * FUNCS;
+static FUNC * FUNCS = NULL;
 
 // Size of [FUNCS] struct array
 static unsigned char funcs_size = 0;

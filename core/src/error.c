@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "error.h"
 
 // Struct for holding error data
 typedef struct {
@@ -13,13 +14,13 @@ typedef struct {
 } ERROR;
 
 // Struct array to hold errors of type [ERROR], dynamically allocated
-static ERROR * ERRORS;
+static ERROR * ERRORS = NULL;
 
 // Size of [ERRORS]
 static unsigned char errors_size = 0;
 
 // Dynamically allocated variable for error string
-char * _alloce_;
+char * _alloce_ = NULL;
 
 // Append error [ERROR] to [ERRORS] array, see macro chl_error_append
 void error_append(char id, char * value) {

@@ -12,7 +12,7 @@
 
 void chl_view(char *);
 char file_read_open(char *, FILE **);
-char file_read_data(char **, char *, FILE *);
+char * file_read_data(char **, char *, FILE *);
 void parse_view(char **, char *);
 void chl_import(char *);
 

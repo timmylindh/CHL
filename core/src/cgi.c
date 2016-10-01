@@ -23,12 +23,12 @@ typedef struct {
 } CGI_METHOD_DATA;
 
 
-static CGI_METHOD_DATA * POST; // Struct array for CGI POST data, dynamically allocated
-static CGI_METHOD_DATA * GET; // Struct array for CGI GET data, dynamically allocated
+static CGI_METHOD_DATA * POST = NULL; // Struct array for CGI POST data, dynamically allocated
+static CGI_METHOD_DATA * GET = NULL; // Struct array for CGI GET data, dynamically allocated
 static unsigned char post_size = 0, get_size = 0; // Size of [method] structs
 
 // Buffer for [method] data, dynamically allocated
-static char * raw_data_post, * raw_data_get;
+static char * raw_data_post = NULL, * raw_data_get = NULL;
 
 // Whether [method] has been successfully manipulated or not
 static char post_used = 0, get_used = 0;

@@ -21,8 +21,8 @@ typedef struct {
 	char * value;
 } HTTP_VAR;
 
-static HTTP_VAR * HEADERS; // Struct array for HTTP header variables, dynamically allocated
-static HTTP_VAR * COOKIES; // Struct array for HTTP cookies, dynamically allocated
+static HTTP_VAR * HEADERS = NULL; // Struct array for HTTP header variables, dynamically allocated
+static HTTP_VAR * COOKIES = NULL; // Struct array for HTTP cookies, dynamically allocated
 
 static unsigned char headers_size = 0; // The amount of headers in [HEADERS]
 static unsigned char cookies_size = 0; // The amount of cookies in [COOKIES]
@@ -30,7 +30,7 @@ static unsigned char cookies_size = 0; // The amount of cookies in [COOKIES]
 static char headers_used = 0; // Whether headers have been printed
 static char cookies_used = 0; // Whether cookies have been parsed or not
 
-static char * raw_data_cookies; // Buffer for cookies data, dynamically allocated
+static char * raw_data_cookies = NULL; // Buffer for cookies data, dynamically allocated
 
 // Add header element to [HEADERS] array
 void chl_set_header(char * name, char * value) {

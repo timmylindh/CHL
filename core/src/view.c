@@ -16,7 +16,7 @@
 // Open and interpret view [view_path]
 void chl_view(char * view_path) {
 	FILE * fd; // File stream to [view_path]
-	char * buff; // Buffer to contain file data, dynamically allocated
+	char * buff_st, * buff; // Buffer to contain file data, dynamically allocated
 
 	// Output headers
 	chl_set_default_headers();
@@ -27,7 +27,7 @@ void chl_view(char * view_path) {
 		goto print_error;
 
 	// Read data from file
-	if(! file_read_data(&buff, view_path, fd))
+	if((buff_st = file_read_data(&buff, view_path, fd)) == NULL)
 		goto print_error;
 
 	// Parse and interpret view
@@ -37,7 +37,7 @@ void chl_view(char * view_path) {
 	print_error:
 		chl_print_errors();
 
-	free(buff);
+	free(buff_st);
 	fclose(fd);
 }
 
@@ -71,7 +71,7 @@ char file_read_open(char * path, FILE ** fd) {
 }
 
 // Read data from file [fd], allocate more memory for [buff] if needed
-char file_read_data(char ** buff, char * path, FILE * fd) {
+char * file_read_data(char ** buff, char * path, FILE * fd) {
 	int iteration = 1; // Number of iterations
 	int ntotal = 0; // Total bytes read
 	int nread; // Bytes read in one iteration
@@ -85,7 +85,7 @@ char file_read_data(char ** buff, char * path, FILE * fd) {
 		if((++iteration * BUFF_BLOCK_SIZE) >= VIEW_SIZE_LIM) {
 			// Error too big file
 			chl_error_append(CHL_E_FILESIZE, "file '%s' size exceeded limit %d", path, VIEW_SIZE_LIM);
-			return 0;
+			return NULL;
 		}
 
 		// Allocate more memory for buff
@@ -96,7 +96,7 @@ char file_read_data(char ** buff, char * path, FILE * fd) {
 	// Null terminate data
 	(*buff)[ntotal + nread] = '\0';
 
-	return 1;
+	return *buff;
 }
 
 // Parse and interpret view file [buff]
@@ -138,14 +138,14 @@ void parse_view(char ** buff, char * path) {
 // Import file [file_path] contents
 void chl_import(char * file_path) {
 	FILE * fd; // File stream to [view_path]
-	char * buff; // Buffer to contain file data, dynamically allocated
+	char * buff_st, * buff; // Buffer to contain file data, dynamically allocated
 
 	// Open file [view_path] for reading
 	if(! file_read_open(file_path, &fd))
 		goto print_error;
 
 	// Read data from file
-	if(! file_read_data(&buff, file_path, fd))
+	if((buff_st = file_read_data(&buff, file_path, fd)) == NULL)
 		goto print_error;
 
 	// Parse and interpret view
@@ -155,7 +155,7 @@ void chl_import(char * file_path) {
 	print_error:
 		chl_print_errors();
 
-	free(buff);
+	free(buff_st);
 	fclose(fd);
 }
 
