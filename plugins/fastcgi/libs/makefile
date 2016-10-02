@@ -15,5 +15,4 @@ compile:
 # Clean up
 clean:
 	rm *.o
-	rm *.so
 	

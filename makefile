@@ -34,7 +34,7 @@ install: lib
 	if ! [ -d "$(LIBSPATH)" ]; then mkdir $(LIBSPATH); fi
 	if ! [ -d "$(HEADERSPATH)" ]; then mkdir $(HEADERSPATH); fi
 	mv $(NAME_MAIN_LIB).$(EXTENSION) $(LIBSPATH)/
-	cp $(wildcard $(PATH_PLUGINS_LIBS).so) $(LIBSPATH)/ 2>/dev/null || :
+	cp $(wildcard $(PATH_PLUGINS_LIBS).so*) $(LIBSPATH)/ 2>/dev/null || :
 	cp $(PATH_CORE)/*.h $(HEADERSPATH)/
 	cp $(wildcard $(PATH_PLUGINS)/*/*.h) $(HEADERSPATH)/ 2>/dev/null || :
 	ln -f -s $(LIBSPATH)/* /usr/lib/

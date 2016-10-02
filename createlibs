@@ -1,4 +1,7 @@
 #!/bin/bash
 
 # Loop through ${1} subfolders and make libraries 
-for dir in ${1}/*/; do cd ${dir}/libs; make; done
+for dir in ${1}/*/; do
+  cd ${dir}/libs; 
+  if [ -f "makefile" ]; then make; fi
+done
