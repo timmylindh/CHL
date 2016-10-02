@@ -2,9 +2,9 @@
  * This source file's purpose is to define the default inline functions for CHL
  */
 
-#include "deffuncs.h"
 #include "inline.h"
 #include "view.h"
+#include "deffuncs.h"
 
 // Default inline function for importing files
 void _def_import(char * args) {
@@ -12,7 +12,7 @@ void _def_import(char * args) {
 
 	// Import file if argument file name is defined
 	if((file = chl_next_arg(args)))
-		chl_import(args);
+		chl_import(file);
 }
 
 // Default inline print function
