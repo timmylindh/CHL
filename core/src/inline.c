@@ -126,8 +126,8 @@ void chl_func_append(char * name, void (* function)(char *)) {
 
 // Execute function [name], return 0 if not found
 char chl_func(char * name, char * args) {
-	// Append default functions if [FUNCS] is empty
-	if(! funcs_size)
+	// Check whether default functions have been initialized
+	if(! def_funcs)
 		append_default_funcs();
 
 	int i, x;

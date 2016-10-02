@@ -9,6 +9,7 @@
 #include "fcgi_stdio.h"
 #endif
 
+extern char def_funcs;
 void _def_import(char *);
 void _def_print(char *);
 void append_default_funcs();

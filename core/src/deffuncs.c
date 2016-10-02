@@ -6,6 +6,9 @@
 #include "view.h"
 #include "deffuncs.h"
 
+// Whether default functions have been initialized or not
+char def_funcs = 0;
+
 // Default inline function for importing files
 void _def_import(char * args) {
 	char * file;
@@ -37,4 +40,6 @@ void append_default_funcs() {
 	chl_func_append(DEF_FUNC_IMPORT, _def_import);
 	// Add default inline print function
 	chl_func_append(DEF_FUNC_PRINT, _def_print);
+
+	def_funcs = 1;
 }
