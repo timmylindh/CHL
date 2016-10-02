@@ -251,6 +251,7 @@ char chl_get_args(char *(** dst), char * args) {
 // Initialize and free objects, called by chl_fcgi_init
 void _inline_init() {
 	funcs_size = 0;
+	def_funcs = 0;
 
 	free(FUNCS);
 	FUNCS = NULL;
