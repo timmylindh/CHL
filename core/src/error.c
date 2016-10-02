@@ -53,4 +53,7 @@ void _error_init() {
 
 	free(ERRORS);
 	free(_alloce_);
+
+	ERRORS = NULL;
+	_alloce_ = NULL;
 }
