@@ -4,4 +4,5 @@
 for dir in ${1}/*/; do
   cd ${dir}/libs; 
   if [ -f "makefile" ]; then make; fi
+  cd ../../..
 done
