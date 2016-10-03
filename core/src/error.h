@@ -17,6 +17,7 @@
 #define CHL_E_NOTERMFUNC 4 // Error: no function code terminator
 #define CHL_E_UNEXV 5 // Error: no clear end of variable name
 #define CHL_E_UNKFUNC 6 // Error: unknown function
+#define CHL_E_MYSQL 7 // Error: MySQL error
 
 void error_append(char, char *);
 void chl_print_errors();
