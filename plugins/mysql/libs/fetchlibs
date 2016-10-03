@@ -8,11 +8,11 @@ DFILE="mysql.tar.gz"
 DIR_NAME="mysql"
 LIB_NAME="libmysqlclient.so"
 
-# MYSQL C CONTROLLER DOWNLOAD URLS
+# MYSQL C CONNECTOR DOWNLOAD URLS
 MYSQL_64="https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.6-linux-glibc2.5-x86_64.tar.gz"
 MYSQL_32="https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.6-linux-glibc2.5-i686.tar.gz"
 
-# DOWNLOAD MYSQL C CONTROLLER
+# DOWNLOAD MYSQL C CONNECTOR
 if [ ${SYS_TYPE} == "x86_64" ]; then
   wget -q ${MYSQL_64} -O ${DFILE}
 else
