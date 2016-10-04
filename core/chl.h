@@ -133,7 +133,7 @@ void chl_view(char * path);
 
 /*
  * Function for acquiring contents of files
- * [name]: path to file
+ * [path]: path to file
  */
 void chl_import(char * path);
 
@@ -200,6 +200,6 @@ void chl_fcgi_init();
  *
  * Return: 1 if pending client, 0 if an error accoured
  */
-int chl_fcgi_next();
+char chl_fcgi_next();
 
 #endif /* CHL_H_ */

@@ -21,7 +21,7 @@ void chl_fcgi_init() {
 }
 
 // Accept next client using FastCGI, caller should run in a loop
-int chl_fcgi_next() {
+char chl_fcgi_next() {
 	chl_fcgi_init();
 
 	if(FCGI_Accept() >= 0)
