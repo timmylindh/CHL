@@ -80,9 +80,6 @@ int chl_mysql_num_rows() {
 	// Fetch result if not already fetched
 	if(sql_result == NULL)
 	if((sql_result = mysql_store_result(con)) == NULL) {
-		if(errors_state)
-			_print_errors();
-
 		chl_mysql_free_result();
 		return 0;
 	}

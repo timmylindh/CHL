@@ -16,7 +16,7 @@
 // Open and interpret view [view_path]
 void chl_view(char * view_path) {
 	FILE * fd; // File stream to [view_path]
-	char * buff_st, * buff; // Buffer to contain file data, dynamically allocated
+	char * buff_st = NULL, * buff = NULL; // Buffer to contain file data, dynamically allocated
 
 	// Output headers
 	chl_set_default_headers();
@@ -38,7 +38,9 @@ void chl_view(char * view_path) {
 		chl_print_errors();
 
 	free(buff_st);
-	fclose(fd);
+
+	if(fd != NULL)
+		fclose(fd);
 }
 
 
@@ -138,7 +140,7 @@ void parse_view(char ** buff, char * path) {
 // Import file [file_path] contents
 void chl_import(char * file_path) {
 	FILE * fd; // File stream to [view_path]
-	char * buff_st, * buff; // Buffer to contain file data, dynamically allocated
+	char * buff_st = NULL, * buff = NULL; // Buffer to contain file data, dynamically allocated
 
 	// Open file [view_path] for reading
 	if(! file_read_open(file_path, &fd))
@@ -156,6 +158,8 @@ void chl_import(char * file_path) {
 		chl_print_errors();
 
 	free(buff_st);
-	fclose(fd);
+
+	if(fd != NULL)
+		fclose(fd);
 }
 

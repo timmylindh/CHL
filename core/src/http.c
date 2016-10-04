@@ -224,7 +224,6 @@ void _http_init() {
 
 	free(HEADERS);
 	free(COOKIES);
-	free(raw_data_cookies);
 
 	HEADERS = NULL;
 	COOKIES = NULL;
