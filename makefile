@@ -45,11 +45,11 @@ lib: compile
 	gcc -shared -o $(NAME_MAIN_LIB).so *.o
 	make clean
 
-	# Create plugin libraries
-	bash createlibs $(PATH_PLUGINS)	
-
 # Compile source files to position independent object files
 compile:
+	# Create plugin libraries
+	bash createlibs $(PATH_PLUGINS)
+
 	# Check whether to compile for FastCGI or CGI 
 	if [ "${TYPE}" != "FCGI" ]; then $(COMPILER) -c -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC));  else $(COMPILER) -c -D '_F_CHL_' -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC)); fi	
 	
