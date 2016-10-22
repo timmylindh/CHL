@@ -16,6 +16,9 @@ echo "fetching MySQL C Connector..."
 # DOWNLOAD MYSQL C CONNECTOR
 if [ ${SYS_TYPE} == "x86_64" ]; then
   wget -q ${MYSQL_64} -O ${DFILE}
+elif [ ${SYS_TYPE} == *"ARM"* ]; then
+  echo "ARM - no MYSQL support, deleting files..."
+  rm -r ../src/*
 else
   wget -q ${MYSQL_32} -O ${DFILE}
 fi
