@@ -218,9 +218,15 @@ void chl_delete_cookie(char * name) {
 // Initialize and free objects, called by chl_fcgi_init
 void _http_init() {
 	headers_size = 0;
-	cookies_size = 0;
 	headers_used = 0;
 	cookies_used = 0;
+
+	for(int i = 0; i < cookies_size; i++) {
+		free(HEADERS[i].name);
+		free(HEADERS[i].value);
+	}
+
+	cookies_size = 0;
 
 	free(HEADERS);
 	free(COOKIES);
