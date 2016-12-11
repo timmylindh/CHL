@@ -11,6 +11,7 @@
 #include "inline.h"
 #include "error.h"
 #include "deffuncs.h"
+#include "std.h"
 
 // Struct for CHL inline functions
 typedef struct {

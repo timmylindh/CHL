@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "error.h"
+#include "std.h"
 
 // Struct for holding error data
 typedef struct {

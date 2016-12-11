@@ -10,6 +10,7 @@
 #include <limits.h>
 #include <math.h>
 #include "cgi.h"
+#include "std.h"
 
 #define GET_DATA_ENV "QUERY_STRING" // GET data environment variable
 #define METHOD_POST 1
@@ -21,7 +22,6 @@ typedef struct {
 	char * name;
 	char * value;
 } CGI_METHOD_DATA;
-
 
 static CGI_METHOD_DATA * POST = NULL; // Struct array for CGI POST data, dynamically allocated
 static CGI_METHOD_DATA * GET = NULL; // Struct array for CGI GET data, dynamically allocated
@@ -338,7 +338,7 @@ float chl_getf(char * name) {
 // Read POST data from stdin
 void method_post_read_input() {
 	int ntotal = 0; // Total bytes read
-	int nread; // Bytes read in one iteration
+	int nread = 0; // Bytes read in one iteration
 	int iteration = 1; // Number of iterations
 
 	// Read data from stdin [METHOD_POST_NREAD] bytes at time, allocate more memory if needed

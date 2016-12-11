@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "http.h"
+#include "std.h"
 
 // Implemented from cgi.c
 extern char * get_env(char *);

@@ -10,6 +10,7 @@
 #include "http.h"
 #include "view.h"
 #include "inline.h"
+#include "std.h"
 
 #define BUFF_BLOCK_SIZE 2000 // Size per allocation for [buffer]
 
