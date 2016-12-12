@@ -50,7 +50,7 @@ void method_post_init() {
 		return;
 
 	// Allocate memory for POST data
-	raw_data_post = malloc(METHOD_POST_NREAD * sizeof(char)); // POST data
+	raw_data_post = std_malloc(METHOD_POST_NREAD * sizeof(char)); // POST data
 
 	//Append temporary blank variable to POST array to prevent NULL error, overwritten
 	method_append_var(" ", " ", METHOD_POST);
@@ -197,7 +197,7 @@ void method_append_var(char * name, char * value, const char method) {
 	switch(method) {
 		case METHOD_POST:
 			// Allocate memory for new variable
-			POST = realloc(POST, ++post_size * sizeof(CGI_METHOD_DATA));
+			POST = std_realloc(POST, ++post_size * sizeof(CGI_METHOD_DATA));
 
 			// Set variable properties
 			POST[post_size - 1].name = name;
@@ -207,7 +207,7 @@ void method_append_var(char * name, char * value, const char method) {
 
 		case METHOD_GET:
 			// Allocate memory for new variable
-			GET = realloc(GET, ++get_size * sizeof(CGI_METHOD_DATA));
+			GET = std_realloc(GET, ++get_size * sizeof(CGI_METHOD_DATA));
 
 			// Set variable properties
 			GET[get_size - 1].name = name;
@@ -348,7 +348,7 @@ void method_post_read_input() {
 			return;
 
 		// Allocate more memory for POST data
-		raw_data_post = realloc(raw_data_post, iteration * METHOD_POST_NREAD);
+		raw_data_post = std_realloc(raw_data_post, iteration * METHOD_POST_NREAD);
 		ntotal += nread;
 	}
 

@@ -44,7 +44,7 @@ void chl_set_header(char * name, char * value) {
 	}
 
 	// Allocate memory for new header
-	HEADERS = realloc(HEADERS, ++headers_size * sizeof(HTTP_VAR));
+	HEADERS = std_realloc(HEADERS, ++headers_size * sizeof(HTTP_VAR));
 
 	// Set header properties
 	HEADERS[headers_size - 1].name = name;
@@ -91,7 +91,7 @@ void chl_print_headers() {
 // Set default HTTP headers
 void chl_set_default_headers() {
 	// Allocate memory for new headers
-	HEADERS = realloc(HEADERS, (++headers_size + 1) * sizeof(HTTP_VAR));
+	HEADERS = std_realloc(HEADERS, (++headers_size + 1) * sizeof(HTTP_VAR));
 
 	// Set default content-type header properties
 	HEADERS[headers_size - 1].name = "Content-Type";
@@ -170,7 +170,7 @@ void cookies_append_var(char * name, char * value) {
 		return;
 
 	// Allocate memory for new variable
-	COOKIES = realloc(COOKIES, ++cookies_size * sizeof(HTTP_VAR));
+	COOKIES = std_realloc(COOKIES, ++cookies_size * sizeof(HTTP_VAR));
 
 	// Set variable properties
 	COOKIES[cookies_size - 1].name = name;

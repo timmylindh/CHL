@@ -80,7 +80,7 @@ char * file_read_data(char ** buff, char * path, FILE * fd) {
 	int nread; // Bytes read in one iteration
 
 	 // Allocate memory for [buff]
-	*buff = malloc(BUFF_BLOCK_SIZE * sizeof(char));
+	*buff = std_malloc(BUFF_BLOCK_SIZE * sizeof(char));
 
 	// Read data from stdin [BUFF_BLOCK_SIZE] bytes at time, allocate more memory if needed
 	while((nread = fread(*buff + ntotal, sizeof(char), BUFF_BLOCK_SIZE, fd)) == BUFF_BLOCK_SIZE) {
@@ -92,7 +92,7 @@ char * file_read_data(char ** buff, char * path, FILE * fd) {
 		}
 
 		// Allocate more memory for buff
-		*buff = realloc(*buff, iteration * VIEW_SIZE_LIM);
+		*buff = std_realloc(*buff, iteration * VIEW_SIZE_LIM);
 		ntotal += nread;
 	}
 

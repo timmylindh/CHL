@@ -22,7 +22,7 @@ void chl_print_errors();
 extern char * _alloce_;
 
 // Macro to dynamically allocate an error string and pass it to error_append
-#define chl_error_append(id, ...) snprintf((_alloce_ = malloc(100)), 100, __VA_ARGS__), error_append(id, _alloce_);
+#define chl_error_append(id, ...) snprintf((_alloce_ = std_malloc(100)), 100, __VA_ARGS__), error_append(id, _alloce_);
 
 // <cgi.c>
 

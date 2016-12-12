@@ -118,7 +118,7 @@ void chl_func_append(char * name, void (* function)(char *)) {
 		return;
 
 	// Allocate memory for new function
-	FUNCS = realloc(FUNCS, ++funcs_size * sizeof(FUNC));
+	FUNCS = std_realloc(FUNCS, ++funcs_size * sizeof(FUNC));
 
 	// Set variable properties
 	FUNCS[funcs_size - 1].name = name;
@@ -235,13 +235,13 @@ char chl_get_args(char *(** dst), char * args) {
 		return 0;
 
 	// Allocate memory for argument pointer
-	*dst = malloc(++argsn * sizeof(char *));
+	*dst = std_malloc(++argsn * sizeof(char *));
 	**dst = arg;
 
 	// While there are still arguments left
 	while((arg = chl_next_arg(NULL))) {
 		// Allocate memory for argument pointer
-		*dst = realloc(*dst, ++argsn * sizeof(char *));
+		*dst = std_realloc(*dst, ++argsn * sizeof(char *));
 		*(*dst + (argsn - 1)) = arg;
 	}
 

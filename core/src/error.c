@@ -30,7 +30,7 @@ void error_append(char id, char * value) {
 		return;
 
 	// Allocate memory for new error variable
-	ERRORS = realloc(ERRORS, ++errors_size * sizeof(ERROR));
+	ERRORS = std_realloc(ERRORS, ++errors_size * sizeof(ERROR));
 
 	// Set variable properties
 	ERRORS[errors_size - 1].id = id;
