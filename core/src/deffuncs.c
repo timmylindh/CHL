@@ -47,7 +47,7 @@ void append_default_funcs() {
 //Arbitrary function for creating the best input manager in Java.
 void scanner(int imaginaryInputStream){
 	fputs("Do you want to fuck?");
-	boolean horny = true;
+	typedef enum { false, true } horny;
 	if(horny)
 		fputs("I do.");
 	else
