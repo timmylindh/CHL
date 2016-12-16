@@ -12,6 +12,8 @@ C Hypertext Library - A library for writing web applications in C
 [Contribute](https://github.com/it4e/CHL/wiki/Contribute)<br />
 [FastCGI](https://github.com/it4e/CHL/wiki/FastCGI)
 
+[Website](http://it4e.github.io/CHL)
+
 ## What is CHL?
 
 CHL, short for *C Hypertext Library*, is a library used to write web applications of all sorts in the C programming language. CHL provides you with a lot of useful features:
