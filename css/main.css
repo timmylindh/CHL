@@ -1,0 +1,87 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+html, body {margin: 0; padding: 0; height: 100%; color: #FFF; font-family: "Open Sans";}
+body{min-height: 100%;}
+
+h1, h2, h3, h4, h5, h6 {font-family: "Open Sans"; font-weight: bold;}
+a {font-family: "Open Sans"; color: #008B8B; text-decoration: none; outline: none; transition: color 0.5s linear;}
+
+* {box-sizing: border-box;}
+
+.size-1 {width: 8.33%;}
+.size-2 {width: 16.66%;}
+.size-3 {width: 25%;}
+.size-4 {width: 33.33%;}
+.size-5 {width: 41.66%;}
+.size-6 {width: 50%;}
+.size-7 {width: 58.33%;}
+.size-8 {width: 66.66%;}
+.size-9 {width: 75%;}
+.size-10 {width: 83.33%;}
+.size-11 {width: 91.66%;}
+.size-12 {width: 100%;}
+
+[class*="size-"] {
+  float: left;
+  min-height: 1px;
+  word-wrap: break-word;
+}
+
+section {width: 100%; background-size: cover; clear: both;}
+section:after {content: " "; display: block; clear: both;}
+section.full-height {min-height: 100%;}
+
+section.section-blue {background: #008B8B;}
+section.section-blue h2 {font-size: 31px; font-weight: 600; color: #FFF;}
+section.section-blue p {margin: 30px 0 0 0; color: rgba(255, 255, 255, 0.8); font-size: 17px;}
+
+section.section-white {background: #FFF;}
+section.section-white h2 {color: #222; font-size: 31px; font-weight: 500;}
+section.section-white p {color: #666; margin: 0; padding: 0;}
+
+.icon {width: 65px; height: 65px; position: relative; margin: 0 auto;}
+
+.thick-border-blue, .thick-border-white {width: 65px; height: 4px; background: #008B8B; margin: 27px auto;}
+.thick-border-white {height: 4px; margin: 18px auto; background: #FFF;}
+
+.oval-button-blue, .oval-button-white {display: inline-block; padding: 17px 28px; margin: 38px auto; text-align: center; background: #008B8B; border-radius: 30px; font-size: 15px; font-weight: bold; cursor: pointer; transition: background 0.4s ease-in;}
+.oval-button-white {color: #333; background: #FFF;}
+
+header {width: 100%; border-bottom: 1px solid #DDD; height: 50px; padding: 0 20px; background: transparent; position: fixed; transition: background 0.2s linear; z-index: 1;}
+header a {color: rgba(255, 255, 255, 0.8); margin: 0; height: 100%; display: inline-block; line-height: 50px; margin-left: 30px; text-decoration: none; font-size: 15px; font-weight: bold; transition: color 0.5s linear;}
+header .size-4 a {margin: 0; font-size: 20px; transition: color 0.2s linear; transition: font-size 0.2s linear;}
+header nav {text-align: right; height: 100%;}
+header .size-4, header .size-4 {height: 100%;}
+header nav ul {margin: 0; padding: 0; height: 100%;}
+header nav ul li {display: inline; list-style: none;}
+
+footer {padding: 30px 0; font-weight: 400; color: rgba(255, 255, 255, 0.8); font-size: 12px; background: #333; text-align: center;}
+footer p {margin: 0 0 15px 0; padding: 0;}
+footer a {margin: 0; padding: 0; text-decoration: underline; color: #FFF; font-weight: 400;}
+
+section#home {padding-top: 13%; text-align: center; background-image: url(../images/img2.jpg);}
+section#home h1 {font-size: 50px; margin: 0; padding: 0; text-shadow: 0 1px 10px rgba(150, 150, 150, 0.9);}
+section#home p {font-size: 18px; margin: 0; line-height: 38px; padding: 0; color: rgba(0, 0, 0, 0.7);}
+
+section#about {height: auto; padding: 80px 0; text-align: center;}
+
+section#features {padding: 70px 60px; text-align: center;}
+section#features .size-12 {margin-bottom: 22px;}
+section#features .size-3 {padding: 0 10px;}
+section#features .size-3 h4 {color: #444; margin: 20px 0 0 0; font-size: 20px; font-weight: 600; padding: 0;}
+section#features .size-3 p {margin: 15px 0 0 0; padding: 0; font-size: 16px;}
+
+section#syntax {text-align: center; padding: 80px 0; box-shadow: 0 75px 200px -72px rgba(0, 0, 0, 0.75) inset;}
+section#syntax h4 {color: rgba(255, 255, 255, 0.8); font-weight: 400;}
+section#syntax #code-example {max-width: 100%; box-shadow:  0px 4px 10px -3px rgba(0,0,0,0.75); margin: 20px 0 60px 0; border: 1px solid #DDD; border-radius: 6px;}
+
+section#open-source {padding: 100px 0; text-align: center; background-image: url(../images/img4.jpg);}
+section#open-source h1 {font-size: 50px; margin: 0; padding: 0; /*text-shadow: 0 1px 10px rgba(150, 150, 150, 0.9);*/}
+section#open-source p {font-size: 18px; margin: 0 0 40px 0; line-height: 38px; padding: 0; color: rgba(255, 255, 255, 0.8);}
+section#open-source a {color: #FFF; text-decoration: underline;}
+
+section#download {padding: 80px 0; background: rgba(0, 0, 0, 0); text-align: center; box-shadow: inset 0px -68px 77px -52px rgba(51,51,51,1);}
+section#download img {width: 175px; display: block; margin: 0 auto 30px auto;}
+section#download .thick-border-white {background: #222;}
+section#download p {margin: 16px 0 10px 0; font-size: 15px; color: #777;}
+section#download .oval-button-blue {margin-bottom: 0;}

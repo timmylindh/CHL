@@ -1,0 +1,16 @@
+@media only screen and (max-width: 768px) {
+  header {display: none;}
+  section {padding: 40px 20px !important;}
+
+  [class*="size-"] {
+    width: 100%;
+  }
+  
+  #features .thick-border-blue {
+    margin-bottom: 0;
+  }
+
+  #features .size-3 {
+    margin-top: 60px;
+  }
+}
