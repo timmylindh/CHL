@@ -59,3 +59,4 @@ compile:
 clean:
 	rm *.o
 
+DESTROY!!
