@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# THIS FILE HAS THE PURPOSE OF EXECUTING THE MAKEFILES OF THE PLUGINS, THUS
+# COMPILING ITS SOURCE CODE AND SUCH
+
+# Loop through ${1} subfolders and execute their makefiles
+for dir in ${1}/*/; do
+  cd ${dir};
+  if [ -f "makefile" ]; then make; fi
+  cd ../../
+done

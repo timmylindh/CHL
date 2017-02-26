@@ -1,61 +1,41 @@
-# Which compiler to use
-COMPILER = gcc
+# STANDARD MAKEFILE FOR CHL
+# https://github.com/it4e/CHL
 
-# Path to core
-PATH_CORE = core
+install: move_files
 
-# Path to plugins
-PATH_PLUGINS = plugins
-
-# Path to plugins src
-PATH_PLUGINS_SRC = $(PATH_PLUGINS)/*/src/*.c
-
-# Path to plugins libs
-PATH_PLUGINS_LIBS = $(PATH_PLUGINS)/*/libs/*
-
-# Path to core source files
-PATH_SRC_CORE = $(PATH_CORE)/src
-
-# Name of CHL library
-NAME_MAIN_LIB = libchl
-
-# Name of CHL directories
-NAME_CHL_DIR = chl
-
-# Path to default location for libraries and headers
-LIBSPATH = /usr/lib/$(NAME_CHL_DIR)
-HEADERSPATH = /usr/include/$(NAME_CHL_DIR)
-
-# Default, compile to object files
-all: compile
-
-# Move lib and header files to proper locations
-install: lib
-	if ! [ -d "$(LIBSPATH)" ]; then mkdir $(LIBSPATH); fi
-	if ! [ -d "$(HEADERSPATH)" ]; then mkdir $(HEADERSPATH); fi
-	mv $(NAME_MAIN_LIB).$(EXTENSION) $(LIBSPATH)/
-	cp $(wildcard $(PATH_PLUGINS_LIBS).so*) $(LIBSPATH)/ 2>/dev/null || :
-	cp $(PATH_CORE)/*.h $(HEADERSPATH)/
-	cp $(wildcard $(PATH_PLUGINS)/*/*.h) $(HEADERSPATH)/ 2>/dev/null || :
-	ln -f -s $(LIBSPATH)/* /usr/lib/
-
-# Create main and plugin shared libraries
-lib: compile
-	# Create main shared library	
-	gcc -shared -o $(NAME_MAIN_LIB).so *.o
-	make clean
-
-# Compile source files to position independent object files
-compile:
-	# Create plugin libraries
-	bash createlibs $(PATH_PLUGINS)
-
-	# Check whether to compile for FastCGI or CGI 
-	if [ "${TYPE}" != "FCGI" ]; then $(COMPILER) -c -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC));  else $(COMPILER) -c -D '_F_CHL_' -Wall -Werror -fPIC $(PATH_SRC_CORE)/*.c $(wildcard $(PATH_PLUGINS_SRC)); fi	
+# Put files in proper locations
+move_files: create_lib
+	mv libchl.so /usr/lib/chl/
+	cp core/*.h /usr/include/chl
+	# Move plugin dependent libraries and headers
+	if [ "${PLUGINS}" != "FALSE" ]; then bash findplugindeps plugins; fi
+	# Make CHL libs available
+	ln -f -s /usr/lib/chl/* /usr/lib/
 	
-	$(eval EXTENSION = so)
 
-# Clean up
-clean:
-	rm *.o
+# Create library
+create_lib: create_path compile_core
+	gcc -shared -o libchl.so cmp/*.o
+	make clean
+	
+# Handle compilation of core
+compile_core: compile_plugins
+	if [ "${TYPE}" != "FCGI" ]; then gcc -c -Wall -Werror -fPIC core/src/*.c; mv *.o cmp; else gcc -c -D '_F_CHL_' -Wall -Werror -fPIC core/src/*.c; mv *.o cmp; fi # Check whether to compile as fcgi or cgi
 
+
+# Handle plugins compilation
+compile_plugins:
+	# Check whether to compile plugins or not
+	if [ "${PLUGINS}" != "FALSE" ]; then bash pluginhandler plugins; fi
+
+# Create path for compilation and library
+create_path:
+	# Check whether library paths already exists
+	if ! [ -d "/usr/lib/chl" ]; then mkdir /usr/lib/chl; fi
+	if ! [ -d "/usr/include/chl" ]; then mkdir /usr/include/chl; fi
+	# Check whether compilation folder already exists
+	if ! [ -d "cmp" ]; then mkdir cmp; fi
+
+# Clean cmp
+clean: 
+	if [ -d "cmp" ]; then rm -r cmp; fi
