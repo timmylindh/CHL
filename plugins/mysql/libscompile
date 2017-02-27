@@ -26,22 +26,22 @@ else
   wget -q ${MYSQL_32} -O ${DFILE}
 fi
 
-echo "extracting files..."
-# EXTRACT FILES
-mkdir ${DIR_NAME}
-tar xf ${DFILE} -C ${DIR_NAME} --strip-components 1
-
-# MOVE LIBRARY
-mv $(readlink -f ${DIR_NAME}/lib/${LIB_NAME}) libs
-
-# COMPILE
 if [ "${COMPILE}" = true ]; then
-  echo "Compiling..."
-  gcc -c -Wall -Werror -fPIC src/*.c
-  mv *.o ../../cmp
-fi
+  echo "extracting files..."
+  # EXTRACT FILES
+  mkdir ${DIR_NAME}
+  tar xf ${DFILE} -C ${DIR_NAME} --strip-components 1
 
-echo "clean up..."
-# CLEAN UP
-rm -r ${DFILE} ${DIR_NAME}
+  # MOVE LIBRARY
+  mv $(readlink -f ${DIR_NAME}/lib/${LIB_NAME}) libs
+
+  # COMPILE
+  echo "Compiling..."
+  gcc -std=c11 -c -Wall -Werror -fPIC src/*.c
+  mv *.o ../../cmp
+
+  echo "clean up..."
+  # CLEAN UP
+  rm -r ${DFILE} ${DIR_NAME}
+fi
 

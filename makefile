@@ -20,7 +20,7 @@ create_lib: create_path compile_core
 	
 # Handle compilation of core
 compile_core: compile_plugins
-	if [ "${TYPE}" != "FCGI" ]; then gcc -c -Wall -Werror -fPIC core/src/*.c; mv *.o cmp; else gcc -c -D '_F_CHL_' -Wall -Werror -fPIC core/src/*.c; mv *.o cmp; fi # Check whether to compile as fcgi or cgi
+	if [ "${TYPE}" != "FCGI" ]; then gcc -std=c11 -c -Wall -Werror -fPIC core/src/*.c; mv *.o cmp; else gcc -std=c11 -c -D '_F_CHL_' -Wall -Werror -fPIC core/src/*.c; mv *.o cmp; fi # Check whether to compile as fcgi or cgi
 
 
 # Handle plugins compilation
