@@ -12,7 +12,7 @@
 // Implemented from cgi.c
 extern char * get_env(char *);
 
-#define HEADER_X_POW_BY "CHL 2.0 - ALPHA" // Default x-powered-by header
+#define HEADER_X_POW_BY "CHL" // Default x-powered-by header
 #define HEADER_CON_TYPE "text/html" // Default content-type header
 #define COOKIES_DATA_ENV "HTTP_COOKIE" // Cookies environment variable
 
