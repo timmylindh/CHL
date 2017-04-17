@@ -42,8 +42,12 @@ void chl_print_errors() {
 	int i;
 
 	// Loop through [ERRORS] array and output errors
+	printf("<span style='display: block; position: absolute; top: 0; padding: 10px; background: #FFF; color: #333;'>");
+
 	for(i = 0; i < errors_size; i++)
-		printf("<span style='display: block; position: absolute; top: 0; padding: 10px; background: #FFF; color: #333;'>Error %d: %s.</span>", ERRORS[i].id, ERRORS[i].value);
+		printf("Error %d: %s.<br />", ERRORS[i].id, ERRORS[i].value);
+
+	printf("</span>");
 
 	fflush(stdout);
 }
