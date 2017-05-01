@@ -1,8 +1,18 @@
 # CHL
 C Hypertext Library - A library for writing web applications in C
 
-![alt tag](http://s7.postimg.org/n8kgxv53v/chl_helloworld.png)
+```c
+#include <chl/chl.h>
 
+int main() {
+ chl_set_default_headers();
+ chl_print_headers();
+ 
+ printf("Hello world");
+ 
+ return 0;
+}
+```
  (*Simple Hello World in CHL*)
 
 [See examples](https://github.com/it4e/CHL/wiki/Examples)<br />
