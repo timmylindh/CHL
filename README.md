@@ -52,7 +52,7 @@ What makes CHL uniqe is the support for executing functions inside HTML files, m
 
 ## How does it work?
 
-Web applications written in C must somehow be executed by the Web server since C is a compiled langauge. To make this possible CHL is based on CGI (Common Gateway Interface), which in short means that the server executes your program and passes it data through environment variables. CHL does all the parsing and handling of CGI in the background, and provides you with some easy to use functions instead. CHL also provides an interface for FastCGI.
+Web applications written in C must somehow be executed by the Web server since C is a compiled language. To make this possible CHL is based on CGI (Common Gateway Interface), which in short means that the server executes your program and passes it data through environment variables. CHL does all the parsing and handling of CGI in the background, and provides you with some easy to use functions instead. CHL also provides an interface for FastCGI.
 
 ## API
 
